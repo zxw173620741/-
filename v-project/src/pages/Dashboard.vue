@@ -62,14 +62,9 @@
         <div class="card box-cctv">
           <div class="card-header">农业基地实时监控</div>
           <div class="card-body">
-            <div class="cctv-grid">
-              <div class="cctv-item" v-for="n in 4" :key="n">
-                <div class="screen-placeholder">
-                  <span class="rec-dot">● REC</span>
-                  CAM-0{{ n }}
-                </div>
-                <span class="cam-label">A{{ n }}-区域监控</span>
-              </div>
+            
+            <div class="warning-container">
+              <Warning />
             </div>
           </div>
         </div>
@@ -87,6 +82,7 @@ import TrendChart from '../components/tvecharts/TrendChart.vue'
 import Radar from '../components/tvecharts/radar.vue'
 import ProductAnalysisGreen from '../components/tvecharts/ProductAnalysisGreen.vue'
 import Sankey from '../components/tvecharts/Sankey.vue'
+import Warning from '../components/tvecharts/warning.vue'
 import { mapCity } from '../stores/store.js'
 
 const router = useRouter()
@@ -367,3 +363,5 @@ body {
   }
 }
 </style>
+
+
