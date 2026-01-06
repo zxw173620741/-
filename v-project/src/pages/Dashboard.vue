@@ -9,7 +9,7 @@
         <h1 class="title">中国城市农业数据可视化大屏</h1>
       </div>
       <div class="header-right">
-        <button class="nav-btn" @click="toHome">首页</button>
+        <button class="nav-btn" @click="toHome">成本计算器</button>
         <button class="nav-btn" @click="toDashboard">数据看板</button>
         <button class="nav-btn" @click="toMore">更多看板</button>
       </div>
