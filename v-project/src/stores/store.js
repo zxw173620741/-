@@ -102,3 +102,31 @@ export const pricePredictionCache = defineStore('pricePredictionCachePinia', {
   },
   persist: true // 启用持久化存储
 })
+
+// ==========================================
+// 4. 语音播报 Store (管理语音播报状态)
+// ==========================================
+export const voiceBroadcast = defineStore('voiceBroadcastPinia', {
+  state: () => {
+    return {
+      isEnabled: false, // 语音播报是否开启，默认为未开启
+    }
+  },
+  actions: {
+    // 切换语音播报状态
+    toggleVoiceBroadcast() {
+      this.isEnabled = !this.isEnabled
+    },
+
+    // 开启语音播报
+    enableVoiceBroadcast() {
+      this.isEnabled = true
+    },
+
+    // 关闭语音播报
+    disableVoiceBroadcast() {
+      this.isEnabled = false
+    },
+  },
+  persist: true // 启用持久化存储
+})

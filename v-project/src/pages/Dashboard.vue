@@ -10,7 +10,9 @@
       </div>
       <div class="header-right">
         <button class="nav-btn" @click="toHome">成本计算器</button>
-        <button class="nav-btn" @click="toDashboard">数据看板</button>
+        <button class="nav-btn voice-btn" :class="{ active: voiceBroadcastStore.isEnabled }" @click="toggleVoiceBroadcast">
+          {{ voiceBroadcastStore.isEnabled ? '🔊 语音播报已开启' : '🔇 语音播报' }}
+        </button>
         <button class="nav-btn" @click="toMore">更多看板</button>
       </div>
     </header>
@@ -81,17 +83,22 @@ import ProductAnalysisGreen from '../components/tvecharts/ProductAnalysisGreen.v
 import Sankey from '../components/tvecharts/Sankey.vue'
 import Warning from '../components/tvecharts/warning.vue'
 import AiPrediction from '../components/aiprediction/AiPrediction.vue'
-import { mapLocation, mapProduct } from '../stores/store.js'
+import { mapLocation, mapProduct, voiceBroadcast } from '../stores/store.js'
 
 const router = useRouter()
 const mapLocationStore = mapLocation()
 const mapProductStore = mapProduct()
+const voiceBroadcastStore = voiceBroadcast()
 const currentTime = ref('')
 let timer = null
 
 const toHome = () => router.push('/')
 const toDashboard = () => router.push('/dashboard')
 const toMore = () => router.push('/more')
+
+const toggleVoiceBroadcast = () => {
+  voiceBroadcastStore.toggleVoiceBroadcast()
+}
 
 const updateTime = () => {
   const now = new Date()
@@ -177,6 +184,23 @@ body {
 .nav-btn:hover {
   background: rgba(66, 227, 164, 0.2);
   box-shadow: 0 0 10px rgba(66, 227, 164, 0.4);
+}
+
+.voice-btn.active {
+  background: rgba(66, 227, 164, 0.3);
+  border-color: #42e3a4;
+  box-shadow: 0 0 15px rgba(66, 227, 164, 0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(66, 227, 164, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(66, 227, 164, 0.8);
+  }
 }
 
 /* === 主布局 === */
