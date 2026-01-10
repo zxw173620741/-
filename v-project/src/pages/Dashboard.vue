@@ -51,11 +51,9 @@
 
       <aside class="column right-col">
         <div class="card box-radar">
-          <div class="card-header">区域价格方差雷达分析</div>
+          <div class="card-header">AI 智能预测分析</div>
           <div class="card-body">
-            <div class="chart-container">
-              <Radar />
-            </div>
+            <AiPrediction />
           </div>
         </div>
 
@@ -79,10 +77,10 @@ import { useRouter } from 'vue-router'
 // 请确保以下组件路径正确
 import ChinaMapWrapper from '../components/tvecharts/ChinaMapWrapper.vue'
 import TrendChart from '../components/tvecharts/TrendChart.vue'
-import Radar from '../components/tvecharts/radar.vue'
 import ProductAnalysisGreen from '../components/tvecharts/ProductAnalysisGreen.vue'
 import Sankey from '../components/tvecharts/Sankey.vue'
 import Warning from '../components/tvecharts/warning.vue'
+import AiPrediction from '../components/aiprediction/AiPrediction.vue'
 import { mapLocation, mapProduct } from '../stores/store.js'
 
 const router = useRouter()
