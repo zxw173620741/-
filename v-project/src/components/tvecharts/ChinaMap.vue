@@ -10,7 +10,7 @@ import * as echarts from 'echarts'
 import { mapLocation } from '../../stores/store.js'
 
 const mapLocationStore = mapLocation()
-const emit = defineEmits(['region-change'])
+const emit = defineEmits(['region-change', 'map-level-change'])
 
 const props = defineProps({
   cityData: {
@@ -68,6 +68,8 @@ const loadMapData = async (mapName, adcode) => {
     
     chartInstance.value.hideLoading()
     setOptions(mapName)
+    
+    emit('map-level-change', mapName === 'china')
     
     startRandomHighlight()
     
@@ -142,6 +144,7 @@ const backToPrevious = async () => {
   const prev = historyStack.value.pop()
   await loadMapData(prev.mapName, prev.adcode)
   emit('region-change', prev.mapName === 'china' ? '全国' : prev.mapName)
+  emit('map-level-change', prev.mapName === 'china')
 }
 
 defineExpose({
