@@ -1,14 +1,14 @@
 <template>
   <div class="analysis-card">
-    <div class="card-header">
-      <div class="header-title">
-        <span class="product-name">{{ currentProductName }}</span>
-        <span class="sub-text"> // 价格趋势 & 交易排行监测</span>
-      </div>
-    </div>
-
     <div class="chart-body">
       <div class="chart-section left-section">
+        <div class="left-header-block">
+          <div class="header-row">
+            <span class="product-name">{{ currentProductName }}</span>
+            <span class="sub-text"> // 价格趋势监测</span>
+          </div>
+        </div>
+        
         <div class="section-title">近30日价格走势</div>
         <div ref="priceChartRef" class="echarts-box"></div>
       </div>
@@ -16,8 +16,9 @@
       <div class="divider-v"></div>
 
       <div class="chart-section right-section">
-        <div class="section-title">实时交易量TOP10</div>
-        <div ref="rankChartRef" class="echarts-box"></div>
+        <div class="radar-container">
+          <div ref="radarChartRef" class="echarts-box"></div>
+        </div>
       </div>
 
       <div v-if="loading" class="state-mask">
@@ -34,22 +35,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch, reactive } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import * as echarts from 'echarts'
-import { mapProduct } from '../../stores/store.js'
+import { mapProduct, mapLocation } from '../../stores/store.js'
 
 const mapProductStore = mapProduct()
+const mapLocationStore = mapLocation()
 
 const priceChartRef = ref(null)
-const rankChartRef = ref(null)
+const radarChartRef = ref(null)
 let priceChart = null
-let rankChart = null
+let radarChart = null
 
 const loading = ref(false)
 const isAllEmpty = ref(false)
 const currentProductName = ref('未选择')
 
-// ================= ECharts 配置 =================
+// ================= ECharts 配置 (左侧) =================
 
 const getPriceOption = (xData, yData) => {
   return {
@@ -109,113 +111,179 @@ const getPriceOption = (xData, yData) => {
   }
 }
 
-const getRankOption = (data) => {
-  const topData = data.slice(0, 10)
-  const yData = topData.map((item) => item.name)
-  const xData = topData.map((item) => item.value)
+// ================= ECharts 配置 (右侧：雷达图 - 已修改) =================
+
+const getRadarOption = (data) => {
+  const variances = data.map((item) => item.priceVariance)
+  const avgVariance =
+    variances.length > 0 ? variances.reduce((a, b) => a + b, 0) / variances.length : 0
+  const markets = data.map((item) => item.marketname)
+  const maxValue = Math.max(...variances, avgVariance) * 1.2
 
   return {
     backgroundColor: 'transparent',
-    grid: { top: '5%', left: '2%', right: '12%', bottom: '2%', containLabel: true },
-    tooltip: {
-      trigger: 'axis',
-      backgroundColor: 'rgba(4, 20, 15, 0.9)',
-      borderColor: '#42e3a4',
-      textStyle: { color: '#fff' },
-      formatter: '{b}<br/><span style="color:#42e3a4">●</span> 交易量: {c} 吨',
+    title: {
+      text: '', 
+      left: 'center',
+      top: 0, 
     },
-    xAxis: { type: 'value', splitLine: { show: false }, axisLabel: { show: false } },
-    yAxis: {
-      type: 'category',
-      data: yData,
-      inverse: true,
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: { color: '#fff', fontSize: 10, width: 70, overflow: 'truncate' },
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: 'rgba(0,195,85,0.9)',
+      borderColor: '#00e676',
+      borderWidth: 1,
+      textStyle: { color: '#fff' },
+      formatter: (params) => {
+        if (params.seriesIndex !== 0) return null 
+        
+        return `
+          <div style="padding: 8px;">
+            <div style="font-weight: bold; margin-bottom: 8px; color: #00ff9f;">方差详情</div>
+            ${markets.map((m, i) => {
+                const v = variances[i];
+                const diff = v - avgVariance;
+                const color = '#69f0ae'; 
+                return `<div style="display:flex; justify-content:space-between; width: 180px; font-size:12px; margin-bottom:2px;">
+                    <span>${m}:</span>
+                    <span style="color:${color}">${v.toFixed(3)} (${diff>0?'+':''}${((diff/avgVariance)*100).toFixed(0)}%)</span>
+                </div>`
+            }).join('')}
+             <div style="margin-top:5px; border-top:1px dashed #fff; padding-top:2px;">
+                平均方差: ${avgVariance.toFixed(3)}
+            </div>
+          </div>
+        `
+      },
+    },
+    radar: {
+      shape: 'polygon',
+      center: ['50%', '50%'], 
+      radius: '65%', 
+      indicator: markets.map((name, index) => ({
+        name: `${name}`,
+        max: maxValue,
+        // 【修改点：axisLabel.show 设为 false，彻底隐藏数字】
+        axisLabel: {
+          show: false, 
+        },
+        nameTextStyle: {
+          color: '#00ff9f',
+          fontSize: 11, 
+          fontWeight: 'bold',
+          textShadow: '0 0 8px rgba(0,255,159,0.5)', 
+        },
+      })),
+      splitNumber: 4,
+      axisName: {
+        backgroundColor: 'rgba(0, 195, 85, 0.15)', 
+        borderRadius: 12, 
+        padding: [6, 12], 
+        borderWidth: 0,   
+        shadowColor: 'rgba(0, 255, 159, 0.4)', 
+        shadowBlur: 8,    
+        shadowOffsetY: 2, 
+      },
+      splitArea: {
+        areaStyle: {
+          color: ['rgba(0,255,159,0.05)', 'rgba(0,255,159,0.1)'],
+        },
+      },
+      axisLine: { lineStyle: { color: 'rgba(0,230,118,0.4)' } },
+      splitLine: { lineStyle: { color: 'rgba(0,230,118,0.3)' } },
     },
     series: [
       {
-        type: 'bar',
-        barWidth: 8,
-        data: xData,
-        itemStyle: {
-          borderRadius: [0, 4, 4, 0],
-          color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-            { offset: 0, color: 'rgba(66, 227, 164, 0.2)' },
-            { offset: 1, color: '#00ff9d' },
-          ]),
-        },
-        label: { show: true, position: 'right', color: '#42e3a4', fontSize: 10, formatter: '{c}' },
+        type: 'radar',
+        data: [
+          {
+            value: variances,
+            name: '市场价格方差',
+            symbol: 'circle',
+            symbolSize: 6,
+            itemStyle: {
+              color: '#00ff9f', 
+              borderColor: '#fff',
+              borderWidth: 1,
+            },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(0,255,159,0.8)' },
+                { offset: 1, color: 'rgba(0,255,159,0.2)' },
+              ]),
+            },
+            lineStyle: {
+              width: 2,
+              color: '#00ff9f',
+              shadowColor: 'rgba(0,255,159,0.5)',
+              shadowBlur: 10,
+            },
+          },
+          {
+            value: new Array(markets.length).fill(avgVariance),
+            name: '行业平均线',
+            symbol: 'none',
+            lineStyle: {
+              type: 'dashed',
+              color: '#00e676', 
+              width: 1.5,
+            },
+            itemStyle: { color: 'transparent' },
+          },
+        ],
       },
     ],
+    legend: {
+      bottom: 0,
+      itemWidth: 10,
+      itemHeight: 10,
+      data: ['市场价格方差', '行业平均线'],
+      textStyle: {
+        color: '#00ff9f',
+        fontSize: 10,
+        textShadow: '0 0 5px rgba(0,255,159,0.3)',
+      },
+    },
   }
 }
 
-// ================= 假数据生成器 (核心修改) =================
+// ================= 数据生成逻辑 =================
 
-// 辅助函数：生成最近30天的日期
 const generateDates = () => {
   const dates = []
   const today = new Date()
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today)
     d.setDate(d.getDate() - i)
-    // 格式化为 YYYY-MM-DD
     const dateStr = d.toISOString().split('T')[0]
     dates.push(dateStr)
   }
   return dates
 }
 
-// 生成随机价格数据 (根据不同的基础价格波动)
 const generateRandomPrice = (basePrice = 2.0) => {
   const dates = generateDates()
   return dates.map((date) => ({
     reporttime: date,
-    // 价格在 basePrice 上下浮动 30%
     middleprice: Number((basePrice * (0.85 + Math.random() * 0.3)).toFixed(2)),
   }))
 }
 
-// 生成随机销量数据
-const generateRandomVolume = () => {
+const generateRandomVariance = () => {
   const markets = [
-    '北京新发地',
-    '上海江桥',
-    '广州江南',
-    '深圳海吉星',
-    '杭州良渚',
-    '成都益民',
-    '武汉白沙洲',
-    '南京众彩',
-    '西安欣桥',
-    '重庆双福',
-    '长沙马王堆',
-    '郑州万邦',
-    '昆明王旗营',
-    '沈阳盛发',
+    '北京新发地', '上海江桥', '广州江南', '深圳海吉星', '杭州良渚',
+    '成都益民', '武汉白沙洲', '南京众彩', '西安欣桥', '重庆双福',
   ]
-
-  // 随机取10个市场
-  const shuffled = markets.sort(() => 0.5 - Math.random()).slice(0, 10)
-
-  // 基础销量 300 ~ 1300
+  const shuffled = markets.sort(() => 0.5 - Math.random()).slice(0, 5)
   return shuffled
     .map((market) => ({
-      market: market,
-      volume: Math.floor(300 + Math.random() * 1000),
+      marketname: market,
+      priceVariance: Number((0.04 + Math.random() * 0.16).toFixed(4)),
     }))
-    .sort((a, b) => b.volume - a.volume)
 }
 
-// 模拟三套不同的数据风格 (低价/中价/高价)
 const mockDataStyles = [
-  { priceBase: 1.5 }, // 便宜的菜 (如白菜)
-  { priceBase: 4.5 }, // 中等的菜 (如西红柿)
-  { priceBase: 8.0 }, // 贵的菜 (如姜蒜)
+  { priceBase: 1.5 }, { priceBase: 4.5 }, { priceBase: 8.0 },
 ]
-
-// ================= 数据获取逻辑 =================
 
 const fetchData = async () => {
   const productName = mapProductStore.currentProduct || '大白菜'
@@ -226,45 +294,17 @@ const fetchData = async () => {
   try {
     let priceX = []
     let priceY = []
-
     const style = mockDataStyles[Math.floor(Math.random() * mockDataStyles.length)]
     const mockData = generateRandomPrice(style.priceBase)
-
     priceX = mockData.map((item) => item.reporttime)
     priceY = mockData.map((item) => item.middleprice)
 
-    if (priceChart) {
-      priceChart.setOption(getPriceOption(priceX, priceY), true)
-    }
+    if (priceChart) priceChart.setOption(getPriceOption(priceX, priceY), true)
 
-    let chartData = []
-    const mockDataV = generateRandomVolume()
-    chartData = mockDataV.map((item) => ({
-      name: item.market,
-      value: item.volume,
-    }))
-
-    if (rankChart) {
-      rankChart.setOption(getRankOption(chartData), true)
-    }
+    const mockDataV = generateRandomVariance()
+    if (radarChart) radarChart.setOption(getRadarOption(mockDataV), true)
   } catch (error) {
     console.error('数据生成错误', error)
-
-    const style = mockDataStyles[Math.floor(Math.random() * mockDataStyles.length)]
-    const mockP = generateRandomPrice(style.priceBase)
-    priceChart?.setOption(
-      getPriceOption(
-        mockP.map((i) => i.reporttime),
-        mockP.map((i) => i.middleprice),
-      ),
-      true,
-    )
-
-    const mockV = generateRandomVolume()
-    rankChart?.setOption(
-      getRankOption(mockV.map((i) => ({ name: i.market, value: i.volume }))),
-      true,
-    )
   } finally {
     loading.value = false
   }
@@ -273,27 +313,20 @@ const fetchData = async () => {
 // ================= 初始化 =================
 
 const initCharts = () => {
-  if (!priceChartRef.value || !rankChartRef.value) return
-  if (priceChartRef.value.clientHeight === 0) {
-    setTimeout(initCharts, 200)
-    return
-  }
+  if (!priceChartRef.value || !radarChartRef.value) return
   priceChart = echarts.init(priceChartRef.value)
-  rankChart = echarts.init(rankChartRef.value)
+  radarChart = echarts.init(radarChartRef.value)
   window.addEventListener('resize', handleResize)
 }
 
 const handleResize = () => {
   priceChart?.resize()
-  rankChart?.resize()
+  radarChart?.resize()
 }
 
-watch(
-  () => mapProductStore.currentProduct,
-  (newVal) => {
-    if (newVal) fetchData()
-  },
-)
+watch(() => mapProductStore.currentProduct, (newVal) => {
+  if (newVal) fetchData()
+})
 
 onMounted(() => {
   setTimeout(() => {
@@ -305,7 +338,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
   priceChart?.dispose()
-  rankChart?.dispose()
+  radarChart?.dispose()
 })
 </script>
 
@@ -318,25 +351,6 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   box-shadow: inset 0 0 20px rgba(66, 227, 164, 0.05);
-}
-
-.card-header {
-  padding: 10px 10px 5px 10px;
-  border-bottom: 1px dashed rgba(66, 227, 164, 0.3);
-  flex-shrink: 0;
-}
-
-.product-name {
-  font-size: 18px;
-  font-weight: bold;
-  color: #00ff9d;
-  text-shadow: 0 0 8px rgba(0, 255, 157, 0.4);
-  margin-right: 10px;
-}
-
-.sub-text {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
 }
 
 .chart-body {
@@ -355,15 +369,28 @@ onUnmounted(() => {
 
 .left-section {
   flex: 3;
-}
-.right-section {
-  flex: 2;
+  display: flex;
+  flex-direction: column;
 }
 
-.divider-v {
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(66, 227, 164, 0.3), transparent);
-  margin: 0 8px;
+.left-header-block {
+  padding: 0 5px 8px 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px dashed rgba(66, 227, 164, 0.3);
+  flex-shrink: 0;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00ff9d;
+  text-shadow: 0 0 8px rgba(0, 255, 157, 0.4);
+  margin-right: 10px;
+}
+
+.sub-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .section-title {
@@ -372,16 +399,45 @@ onUnmounted(() => {
   padding-left: 10px;
   margin-bottom: 5px;
   border-left: 2px solid #00ff9d;
+  flex-shrink: 0;
+}
+
+.right-section {
+  flex: 2;
+  padding-left: 5px;
+  height: 100%;
+}
+
+.divider-v {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(66, 227, 164, 0.3), transparent);
+  margin: 0 8px;
 }
 
 .echarts-box {
   flex: 1;
   width: 100%;
-  /* 修正：给予最小高度，防止图表渲染高度为0 */
-  min-height: 180px;
+  min-height: 150px;
 }
 
-/* 遮罩样式保持不变 */
+.radar-container {
+  width: 100%;
+  height: 100%; 
+  display: flex;
+  background: linear-gradient(135deg, rgba(0, 195, 85, 0.08) 0%, rgba(0, 230, 118, 0.02) 100%);
+  border-radius: 8px;
+  box-shadow: inset 0 0 15px rgba(0, 230, 118, 0.1);
+  border: 1px solid rgba(0, 255, 159, 0.2);
+  margin-top: 0; 
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.radar-container:hover {
+  box-shadow: inset 0 0 25px rgba(0, 230, 118, 0.15);
+  border-color: rgba(0, 255, 159, 0.4);
+}
+
 .state-mask {
   position: absolute;
   top: 0;
@@ -419,8 +475,6 @@ onUnmounted(() => {
   color: #42e3a4;
 }
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 </style>
