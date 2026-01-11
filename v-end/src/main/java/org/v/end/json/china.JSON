@@ -1,0 +1,1682 @@
+{
+  "provinces": [
+    {
+      "province_name": "北京市",
+      "cities": [
+        {
+          "city_name": "北京市",
+          "weather_code": "101010100"
+        }
+      ]
+    },
+    {
+      "province_name": "天津市",
+      "cities": [
+        {
+          "city_name": "天津市",
+          "weather_code": "101030100"
+        }
+      ]
+    },
+    {
+      "province_name": "上海市",
+      "cities": [
+        {
+          "city_name": "上海市",
+          "weather_code": "101020100"
+        }
+      ]
+    },
+    {
+      "province_name": "重庆市",
+      "cities": [
+        {
+          "city_name": "重庆市",
+          "weather_code": "101040100"
+        }
+      ]
+    },
+    {
+      "province_name": "河北省",
+      "cities": [
+        {
+          "city_name": "石家庄市",
+          "weather_code": "101090101"
+        },
+        {
+          "city_name": "唐山市",
+          "weather_code": "101090201"
+        },
+        {
+          "city_name": "秦皇岛市",
+          "weather_code": "101090301"
+        },
+        {
+          "city_name": "邯郸市",
+          "weather_code": "101090401"
+        },
+        {
+          "city_name": "邢台市",
+          "weather_code": "101090501"
+        },
+        {
+          "city_name": "保定市",
+          "weather_code": "101090601"
+        },
+        {
+          "city_name": "张家口市",
+          "weather_code": "101090701"
+        },
+        {
+          "city_name": "承德市",
+          "weather_code": "101090801"
+        },
+        {
+          "city_name": "沧州市",
+          "weather_code": "101090901"
+        },
+        {
+          "city_name": "廊坊市",
+          "weather_code": "101091001"
+        },
+        {
+          "city_name": "衡水市",
+          "weather_code": "101091101"
+        }
+      ]
+    },
+    {
+      "province_name": "山西省",
+      "cities": [
+        {
+          "city_name": "太原市",
+          "weather_code": "101100101"
+        },
+        {
+          "city_name": "大同市",
+          "weather_code": "101100201"
+        },
+        {
+          "city_name": "阳泉市",
+          "weather_code": "101100301"
+        },
+        {
+          "city_name": "长治市",
+          "weather_code": "101100401"
+        },
+        {
+          "city_name": "晋城市",
+          "weather_code": "101100501"
+        },
+        {
+          "city_name": "朔州市",
+          "weather_code": "101100601"
+        },
+        {
+          "city_name": "晋中市",
+          "weather_code": "101100701"
+        },
+        {
+          "city_name": "运城市",
+          "weather_code": "101100801"
+        },
+        {
+          "city_name": "忻州市",
+          "weather_code": "101100901"
+        },
+        {
+          "city_name": "临汾市",
+          "weather_code": "101101001"
+        },
+        {
+          "city_name": "吕梁市",
+          "weather_code": "101101101"
+        }
+      ]
+    },
+    {
+      "province_name": "内蒙古自治区",
+      "cities": [
+        {
+          "city_name": "呼和浩特市",
+          "weather_code": "101080101"
+        },
+        {
+          "city_name": "包头市",
+          "weather_code": "101080201"
+        },
+        {
+          "city_name": "乌海市",
+          "weather_code": "101080301"
+        },
+        {
+          "city_name": "赤峰市",
+          "weather_code": "101080401"
+        },
+        {
+          "city_name": "通辽市",
+          "weather_code": "101080501"
+        },
+        {
+          "city_name": "鄂尔多斯市",
+          "weather_code": "101080601"
+        },
+        {
+          "city_name": "呼伦贝尔市",
+          "weather_code": "101080701"
+        },
+        {
+          "city_name": "巴彦淖尔市",
+          "weather_code": "101080801"
+        },
+        {
+          "city_name": "乌兰察布市",
+          "weather_code": "101080901"
+        },
+        {
+          "city_name": "兴安盟",
+          "weather_code": "101081001"
+        },
+        {
+          "city_name": "锡林郭勒盟",
+          "weather_code": "101081101"
+        },
+        {
+          "city_name": "阿拉善盟",
+          "weather_code": "101081201"
+        }
+      ]
+    },
+    {
+      "province_name": "辽宁省",
+      "cities": [
+        {
+          "city_name": "沈阳市",
+          "weather_code": "101070101"
+        },
+        {
+          "city_name": "大连市",
+          "weather_code": "101070201"
+        },
+        {
+          "city_name": "鞍山市",
+          "weather_code": "101070301"
+        },
+        {
+          "city_name": "抚顺市",
+          "weather_code": "101070401"
+        },
+        {
+          "city_name": "本溪市",
+          "weather_code": "101070501"
+        },
+        {
+          "city_name": "丹东市",
+          "weather_code": "101070601"
+        },
+        {
+          "city_name": "锦州市",
+          "weather_code": "101070701"
+        },
+        {
+          "city_name": "营口市",
+          "weather_code": "101070801"
+        },
+        {
+          "city_name": "阜新市",
+          "weather_code": "101070901"
+        },
+        {
+          "city_name": "辽阳市",
+          "weather_code": "101071001"
+        },
+        {
+          "city_name": "盘锦市",
+          "weather_code": "101071101"
+        },
+        {
+          "city_name": "铁岭市",
+          "weather_code": "101071201"
+        },
+        {
+          "city_name": "朝阳市",
+          "weather_code": "101071301"
+        },
+        {
+          "city_name": "葫芦岛市",
+          "weather_code": "101071401"
+        }
+      ]
+    },
+    {
+      "province_name": "吉林省",
+      "cities": [
+        {
+          "city_name": "长春市",
+          "weather_code": "101060101"
+        },
+        {
+          "city_name": "吉林市",
+          "weather_code": "101060201"
+        },
+        {
+          "city_name": "四平市",
+          "weather_code": "101060301"
+        },
+        {
+          "city_name": "辽源市",
+          "weather_code": "101060401"
+        },
+        {
+          "city_name": "通化市",
+          "weather_code": "101060501"
+        },
+        {
+          "city_name": "白山市",
+          "weather_code": "101060601"
+        },
+        {
+          "city_name": "松原市",
+          "weather_code": "101060701"
+        },
+        {
+          "city_name": "白城市",
+          "weather_code": "101060801"
+        },
+        {
+          "city_name": "延边朝鲜族自治州",
+          "weather_code": "101060901"
+        }
+      ]
+    },
+    {
+      "province_name": "黑龙江省",
+      "cities": [
+        {
+          "city_name": "哈尔滨市",
+          "weather_code": "101050101"
+        },
+        {
+          "city_name": "齐齐哈尔市",
+          "weather_code": "101050201"
+        },
+        {
+          "city_name": "鸡西市",
+          "weather_code": "101050301"
+        },
+        {
+          "city_name": "鹤岗市",
+          "weather_code": "101050401"
+        },
+        {
+          "city_name": "双鸭山市",
+          "weather_code": "101050501"
+        },
+        {
+          "city_name": "大庆市",
+          "weather_code": "101050601"
+        },
+        {
+          "city_name": "伊春市",
+          "weather_code": "101050701"
+        },
+        {
+          "city_name": "佳木斯市",
+          "weather_code": "101050801"
+        },
+        {
+          "city_name": "七台河市",
+          "weather_code": "101050901"
+        },
+        {
+          "city_name": "牡丹江市",
+          "weather_code": "101051001"
+        },
+        {
+          "city_name": "黑河市",
+          "weather_code": "101051101"
+        },
+        {
+          "city_name": "绥化市",
+          "weather_code": "101051201"
+        },
+        {
+          "city_name": "大兴安岭地区",
+          "weather_code": "101051301"
+        }
+      ]
+    },
+    {
+      "province_name": "江苏省",
+      "cities": [
+        {
+          "city_name": "南京市",
+          "weather_code": "101190101"
+        },
+        {
+          "city_name": "无锡市",
+          "weather_code": "101190201"
+        },
+        {
+          "city_name": "徐州市",
+          "weather_code": "101190301"
+        },
+        {
+          "city_name": "常州市",
+          "weather_code": "101190501"
+        },
+        {
+          "city_name": "苏州市",
+          "weather_code": "101190401"
+        },
+        {
+          "city_name": "南通市",
+          "weather_code": "101190601"
+        },
+        {
+          "city_name": "连云港市",
+          "weather_code": "101191101"
+        },
+        {
+          "city_name": "淮安市",
+          "weather_code": "101190701"
+        },
+        {
+          "city_name": "盐城市",
+          "weather_code": "101191001"
+        },
+        {
+          "city_name": "扬州市",
+          "weather_code": "101190801"
+        },
+        {
+          "city_name": "镇江市",
+          "weather_code": "101190901"
+        },
+        {
+          "city_name": "泰州市",
+          "weather_code": "101191201"
+        },
+        {
+          "city_name": "宿迁市",
+          "weather_code": "101191301"
+        }
+      ]
+    },
+    {
+      "province_name": "浙江省",
+      "cities": [
+        {
+          "city_name": "杭州市",
+          "weather_code": "101210101"
+        },
+        {
+          "city_name": "宁波市",
+          "weather_code": "101210401"
+        },
+        {
+          "city_name": "温州市",
+          "weather_code": "101210701"
+        },
+        {
+          "city_name": "嘉兴市",
+          "weather_code": "101210301"
+        },
+        {
+          "city_name": "湖州市",
+          "weather_code": "101210201"
+        },
+        {
+          "city_name": "绍兴市",
+          "weather_code": "101210501"
+        },
+        {
+          "city_name": "金华市",
+          "weather_code": "101210901"
+        },
+        {
+          "city_name": "衢州市",
+          "weather_code": "101211001"
+        },
+        {
+          "city_name": "舟山市",
+          "weather_code": "101211101"
+        },
+        {
+          "city_name": "台州市",
+          "weather_code": "101210801"
+        },
+        {
+          "city_name": "丽水市",
+          "weather_code": "101211201"
+        }
+      ]
+    },
+    {
+      "province_name": "安徽省",
+      "cities": [
+        {
+          "city_name": "合肥市",
+          "weather_code": "101220101"
+        },
+        {
+          "city_name": "芜湖市",
+          "weather_code": "101220301"
+        },
+        {
+          "city_name": "蚌埠市",
+          "weather_code": "101220201"
+        },
+        {
+          "city_name": "淮南市",
+          "weather_code": "101220401"
+        },
+        {
+          "city_name": "马鞍山市",
+          "weather_code": "101220501"
+        },
+        {
+          "city_name": "淮北市",
+          "weather_code": "101220601"
+        },
+        {
+          "city_name": "铜陵市",
+          "weather_code": "101220701"
+        },
+        {
+          "city_name": "安庆市",
+          "weather_code": "101220801"
+        },
+        {
+          "city_name": "黄山市",
+          "weather_code": "101221001"
+        },
+        {
+          "city_name": "滁州市",
+          "weather_code": "101221101"
+        },
+        {
+          "city_name": "阜阳市",
+          "weather_code": "101220901"
+        },
+        {
+          "city_name": "宿州市",
+          "weather_code": "101221201"
+        },
+        {
+          "city_name": "六安市",
+          "weather_code": "101221301"
+        },
+        {
+          "city_name": "亳州市",
+          "weather_code": "101221401"
+        },
+        {
+          "city_name": "池州市",
+          "weather_code": "101221501"
+        },
+        {
+          "city_name": "宣城市",
+          "weather_code": "101221601"
+        }
+      ]
+    },
+    {
+      "province_name": "福建省",
+      "cities": [
+        {
+          "city_name": "福州市",
+          "weather_code": "101230101"
+        },
+        {
+          "city_name": "厦门市",
+          "weather_code": "101230201"
+        },
+        {
+          "city_name": "莆田市",
+          "weather_code": "101230301"
+        },
+        {
+          "city_name": "三明市",
+          "weather_code": "101230401"
+        },
+        {
+          "city_name": "泉州市",
+          "weather_code": "101230501"
+        },
+        {
+          "city_name": "漳州市",
+          "weather_code": "101230601"
+        },
+        {
+          "city_name": "南平市",
+          "weather_code": "101230701"
+        },
+        {
+          "city_name": "龙岩市",
+          "weather_code": "101230801"
+        },
+        {
+          "city_name": "宁德市",
+          "weather_code": "101230901"
+        }
+      ]
+    },
+    {
+      "province_name": "江西省",
+      "cities": [
+        {
+          "city_name": "南昌市",
+          "weather_code": "101240101"
+        },
+        {
+          "city_name": "景德镇市",
+          "weather_code": "101240201"
+        },
+        {
+          "city_name": "萍乡市",
+          "weather_code": "101240301"
+        },
+        {
+          "city_name": "九江市",
+          "weather_code": "101240401"
+        },
+        {
+          "city_name": "新余市",
+          "weather_code": "101240501"
+        },
+        {
+          "city_name": "鹰潭市",
+          "weather_code": "101240601"
+        },
+        {
+          "city_name": "赣州市",
+          "weather_code": "101240701"
+        },
+        {
+          "city_name": "吉安市",
+          "weather_code": "101240801"
+        },
+        {
+          "city_name": "宜春市",
+          "weather_code": "101240901"
+        },
+        {
+          "city_name": "抚州市",
+          "weather_code": "101241001"
+        },
+        {
+          "city_name": "上饶市",
+          "weather_code": "101241101"
+        }
+      ]
+    },
+    {
+      "province_name": "山东省",
+      "cities": [
+        {
+          "city_name": "济南市",
+          "weather_code": "101120101"
+        },
+        {
+          "city_name": "青岛市",
+          "weather_code": "101120201"
+        },
+        {
+          "city_name": "淄博市",
+          "weather_code": "101120301"
+        },
+        {
+          "city_name": "枣庄市",
+          "weather_code": "101120401"
+        },
+        {
+          "city_name": "东营市",
+          "weather_code": "101120501"
+        },
+        {
+          "city_name": "烟台市",
+          "weather_code": "101120601"
+        },
+        {
+          "city_name": "潍坊市",
+          "weather_code": "101120701"
+        },
+        {
+          "city_name": "济宁市",
+          "weather_code": "101120801"
+        },
+        {
+          "city_name": "泰安市",
+          "weather_code": "101120901"
+        },
+        {
+          "city_name": "威海市",
+          "weather_code": "101121001"
+        },
+        {
+          "city_name": "日照市",
+          "weather_code": "101121101"
+        },
+        {
+          "city_name": "临沂市",
+          "weather_code": "101121201"
+        },
+        {
+          "city_name": "德州市",
+          "weather_code": "101121301"
+        },
+        {
+          "city_name": "聊城市",
+          "weather_code": "101121401"
+        },
+        {
+          "city_name": "滨州市",
+          "weather_code": "101121501"
+        },
+        {
+          "city_name": "菏泽市",
+          "weather_code": "101121601"
+        }
+      ]
+    },
+    {
+      "province_name": "河南省",
+      "cities": [
+        {
+          "city_name": "郑州市",
+          "weather_code": "101180101"
+        },
+        {
+          "city_name": "开封市",
+          "weather_code": "101180201"
+        },
+        {
+          "city_name": "洛阳市",
+          "weather_code": "101180301"
+        },
+        {
+          "city_name": "平顶山市",
+          "weather_code": "101180401"
+        },
+        {
+          "city_name": "安阳市",
+          "weather_code": "101180501"
+        },
+        {
+          "city_name": "鹤壁市",
+          "weather_code": "101180601"
+        },
+        {
+          "city_name": "新乡市",
+          "weather_code": "101180701"
+        },
+        {
+          "city_name": "焦作市",
+          "weather_code": "101180801"
+        },
+        {
+          "city_name": "濮阳市",
+          "weather_code": "101180901"
+        },
+        {
+          "city_name": "许昌市",
+          "weather_code": "101181001"
+        },
+        {
+          "city_name": "漯河市",
+          "weather_code": "101181101"
+        },
+        {
+          "city_name": "三门峡市",
+          "weather_code": "101181201"
+        },
+        {
+          "city_name": "南阳市",
+          "weather_code": "101181301"
+        },
+        {
+          "city_name": "商丘市",
+          "weather_code": "101181401"
+        },
+        {
+          "city_name": "信阳市",
+          "weather_code": "101181501"
+        },
+        {
+          "city_name": "周口市",
+          "weather_code": "101181601"
+        },
+        {
+          "city_name": "驻马店市",
+          "weather_code": "101181701"
+        }
+      ]
+    },
+    {
+      "province_name": "湖北省",
+      "cities": [
+        {
+          "city_name": "武汉市",
+          "weather_code": "101200101"
+        },
+        {
+          "city_name": "黄石市",
+          "weather_code": "101200201"
+        },
+        {
+          "city_name": "十堰市",
+          "weather_code": "101200301"
+        },
+        {
+          "city_name": "宜昌市",
+          "weather_code": "101200401"
+        },
+        {
+          "city_name": "襄阳市",
+          "weather_code": "101200501"
+        },
+        {
+          "city_name": "鄂州市",
+          "weather_code": "101200601"
+        },
+        {
+          "city_name": "荆门市",
+          "weather_code": "101200701"
+        },
+        {
+          "city_name": "孝感市",
+          "weather_code": "101200801"
+        },
+        {
+          "city_name": "荆州市",
+          "weather_code": "101200901"
+        },
+        {
+          "city_name": "黄冈市",
+          "weather_code": "101201001"
+        },
+        {
+          "city_name": "咸宁市",
+          "weather_code": "101201101"
+        },
+        {
+          "city_name": "随州市",
+          "weather_code": "101201201"
+        },
+        {
+          "city_name": "恩施土家族苗族自治州",
+          "weather_code": "101201301"
+        },
+        {
+          "city_name": "仙桃市",
+          "weather_code": "101201601"
+        },
+        {
+          "city_name": "潜江市",
+          "weather_code": "101201401"
+        },
+        {
+          "city_name": "天门市",
+          "weather_code": "101201501"
+        },
+        {
+          "city_name": "神农架林区",
+          "weather_code": "101201701"
+        }
+      ]
+    },
+    {
+      "province_name": "湖南省",
+      "cities": [
+        {
+          "city_name": "长沙市",
+          "weather_code": "101250101"
+        },
+        {
+          "city_name": "株洲市",
+          "weather_code": "101250201"
+        },
+        {
+          "city_name": "湘潭市",
+          "weather_code": "101250301"
+        },
+        {
+          "city_name": "衡阳市",
+          "weather_code": "101250401"
+        },
+        {
+          "city_name": "邵阳市",
+          "weather_code": "101250501"
+        },
+        {
+          "city_name": "岳阳市",
+          "weather_code": "101250601"
+        },
+        {
+          "city_name": "常德市",
+          "weather_code": "101250701"
+        },
+        {
+          "city_name": "张家界市",
+          "weather_code": "101250801"
+        },
+        {
+          "city_name": "益阳市",
+          "weather_code": "101250901"
+        },
+        {
+          "city_name": "郴州市",
+          "weather_code": "101251001"
+        },
+        {
+          "city_name": "永州市",
+          "weather_code": "101251101"
+        },
+        {
+          "city_name": "怀化市",
+          "weather_code": "101251201"
+        },
+        {
+          "city_name": "娄底市",
+          "weather_code": "101251301"
+        },
+        {
+          "city_name": "湘西土家族苗族自治州",
+          "weather_code": "101251401"
+        }
+      ]
+    },
+    {
+      "province_name": "广东省",
+      "cities": [
+        {
+          "city_name": "广州市",
+          "weather_code": "101280101"
+        },
+        {
+          "city_name": "韶关市",
+          "weather_code": "101280201"
+        },
+        {
+          "city_name": "深圳市",
+          "weather_code": "101280601"
+        },
+        {
+          "city_name": "珠海市",
+          "weather_code": "101280701"
+        },
+        {
+          "city_name": "汕头市",
+          "weather_code": "101280501"
+        },
+        {
+          "city_name": "佛山市",
+          "weather_code": "101280800"
+        },
+        {
+          "city_name": "江门市",
+          "weather_code": "101281301"
+        },
+        {
+          "city_name": "湛江市",
+          "weather_code": "101280901"
+        },
+        {
+          "city_name": "茂名市",
+          "weather_code": "101281001"
+        },
+        {
+          "city_name": "肇庆市",
+          "weather_code": "101281201"
+        },
+        {
+          "city_name": "惠州市",
+          "weather_code": "101280301"
+        },
+        {
+          "city_name": "梅州市",
+          "weather_code": "101280401"
+        },
+        {
+          "city_name": "汕尾市",
+          "weather_code": "101281701"
+        },
+        {
+          "city_name": "河源市",
+          "weather_code": "101282501"
+        },
+        {
+          "city_name": "阳江市",
+          "weather_code": "101281101"
+        },
+        {
+          "city_name": "清远市",
+          "weather_code": "101282601"
+        },
+        {
+          "city_name": "东莞市",
+          "weather_code": "101281601"
+        },
+        {
+          "city_name": "中山市",
+          "weather_code": "101281401"
+        },
+        {
+          "city_name": "潮州市",
+          "weather_code": "101281801"
+        },
+        {
+          "city_name": "揭阳市",
+          "weather_code": "101281901"
+        },
+        {
+          "city_name": "云浮市",
+          "weather_code": "101282701"
+        }
+      ]
+    },
+    {
+      "province_name": "广西壮族自治区",
+      "cities": [
+        {
+          "city_name": "南宁市",
+          "weather_code": "101300101"
+        },
+        {
+          "city_name": "柳州市",
+          "weather_code": "101300201"
+        },
+        {
+          "city_name": "桂林市",
+          "weather_code": "101300301"
+        },
+        {
+          "city_name": "梧州市",
+          "weather_code": "101300401"
+        },
+        {
+          "city_name": "北海市",
+          "weather_code": "101300501"
+        },
+        {
+          "city_name": "防城港市",
+          "weather_code": "101300601"
+        },
+        {
+          "city_name": "钦州市",
+          "weather_code": "101300701"
+        },
+        {
+          "city_name": "贵港市",
+          "weather_code": "101300801"
+        },
+        {
+          "city_name": "玉林市",
+          "weather_code": "101300901"
+        },
+        {
+          "city_name": "百色市",
+          "weather_code": "101301001"
+        },
+        {
+          "city_name": "贺州市",
+          "weather_code": "101301101"
+        },
+        {
+          "city_name": "河池市",
+          "weather_code": "101301201"
+        },
+        {
+          "city_name": "来宾市",
+          "weather_code": "101301301"
+        },
+        {
+          "city_name": "崇左市",
+          "weather_code": "101301401"
+        }
+      ]
+    },
+    {
+      "province_name": "海南省",
+      "cities": [
+        {
+          "city_name": "海口市",
+          "weather_code": "101310101"
+        },
+        {
+          "city_name": "三亚市",
+          "weather_code": "101310201"
+        },
+        {
+          "city_name": "三沙市",
+          "weather_code": "101310301"
+        },
+        {
+          "city_name": "儋州市",
+          "weather_code": "101310401"
+        },
+        {
+          "city_name": "五指山市",
+          "weather_code": "101310501"
+        },
+        {
+          "city_name": "琼海市",
+          "weather_code": "101310701"
+        },
+        {
+          "city_name": "文昌市",
+          "weather_code": "101310601"
+        },
+        {
+          "city_name": "万宁市",
+          "weather_code": "101310801"
+        },
+        {
+          "city_name": "东方市",
+          "weather_code": "101310901"
+        },
+        {
+          "city_name": "定安县",
+          "weather_code": "101311001"
+        },
+        {
+          "city_name": "屯昌县",
+          "weather_code": "101311101"
+        },
+        {
+          "city_name": "澄迈县",
+          "weather_code": "101311201"
+        },
+        {
+          "city_name": "临高县",
+          "weather_code": "101311301"
+        },
+        {
+          "city_name": "白沙黎族自治县",
+          "weather_code": "101311401"
+        },
+        {
+          "city_name": "昌江黎族自治县",
+          "weather_code": "101311501"
+        },
+        {
+          "city_name": "乐东黎族自治县",
+          "weather_code": "101311601"
+        },
+        {
+          "city_name": "陵水黎族自治县",
+          "weather_code": "101311701"
+        },
+        {
+          "city_name": "保亭黎族苗族自治县",
+          "weather_code": "101311801"
+        },
+        {
+          "city_name": "琼中黎族苗族自治县",
+          "weather_code": "101311901"
+        }
+      ]
+    },
+    {
+      "province_name": "四川省",
+      "cities": [
+        {
+          "city_name": "成都市",
+          "weather_code": "101270101"
+        },
+        {
+          "city_name": "自贡市",
+          "weather_code": "101270201"
+        },
+        {
+          "city_name": "攀枝花市",
+          "weather_code": "101270301"
+        },
+        {
+          "city_name": "泸州市",
+          "weather_code": "101270401"
+        },
+        {
+          "city_name": "德阳市",
+          "weather_code": "101270501"
+        },
+        {
+          "city_name": "绵阳市",
+          "weather_code": "101270601"
+        },
+        {
+          "city_name": "广元市",
+          "weather_code": "101270701"
+        },
+        {
+          "city_name": "遂宁市",
+          "weather_code": "101270801"
+        },
+        {
+          "city_name": "内江市",
+          "weather_code": "101270901"
+        },
+        {
+          "city_name": "乐山市",
+          "weather_code": "101271001"
+        },
+        {
+          "city_name": "南充市",
+          "weather_code": "101271101"
+        },
+        {
+          "city_name": "眉山市",
+          "weather_code": "101271201"
+        },
+        {
+          "city_name": "宜宾市",
+          "weather_code": "101271301"
+        },
+        {
+          "city_name": "广安市",
+          "weather_code": "101271401"
+        },
+        {
+          "city_name": "达州市",
+          "weather_code": "101271501"
+        },
+        {
+          "city_name": "雅安市",
+          "weather_code": "101271601"
+        },
+        {
+          "city_name": "巴中市",
+          "weather_code": "101271701"
+        },
+        {
+          "city_name": "资阳市",
+          "weather_code": "101271801"
+        },
+        {
+          "city_name": "阿坝藏族羌族自治州",
+          "weather_code": "101271901"
+        },
+        {
+          "city_name": "甘孜藏族自治州",
+          "weather_code": "101272001"
+        },
+        {
+          "city_name": "凉山彝族自治州",
+          "weather_code": "101272101"
+        }
+      ]
+    },
+    {
+      "province_name": "贵州省",
+      "cities": [
+        {
+          "city_name": "贵阳市",
+          "weather_code": "101260101"
+        },
+        {
+          "city_name": "六盘水市",
+          "weather_code": "101260201"
+        },
+        {
+          "city_name": "遵义市",
+          "weather_code": "101260301"
+        },
+        {
+          "city_name": "安顺市",
+          "weather_code": "101260401"
+        },
+        {
+          "city_name": "毕节市",
+          "weather_code": "101260501"
+        },
+        {
+          "city_name": "铜仁市",
+          "weather_code": "101260601"
+        },
+        {
+          "city_name": "黔西南布依族苗族自治州",
+          "weather_code": "101260701"
+        },
+        {
+          "city_name": "黔东南苗族侗族自治州",
+          "weather_code": "101260801"
+        },
+        {
+          "city_name": "黔南布依族苗族自治州",
+          "weather_code": "101260901"
+        }
+      ]
+    },
+    {
+      "province_name": "云南省",
+      "cities": [
+        {
+          "city_name": "昆明市",
+          "weather_code": "101290101"
+        },
+        {
+          "city_name": "曲靖市",
+          "weather_code": "101290201"
+        },
+        {
+          "city_name": "玉溪市",
+          "weather_code": "101290301"
+        },
+        {
+          "city_name": "保山市",
+          "weather_code": "101290401"
+        },
+        {
+          "city_name": "昭通市",
+          "weather_code": "101290501"
+        },
+        {
+          "city_name": "丽江市",
+          "weather_code": "101290601"
+        },
+        {
+          "city_name": "普洱市",
+          "weather_code": "101290701"
+        },
+        {
+          "city_name": "临沧市",
+          "weather_code": "101290801"
+        },
+        {
+          "city_name": "楚雄彝族自治州",
+          "weather_code": "101290901"
+        },
+        {
+          "city_name": "红河哈尼族彝族自治州",
+          "weather_code": "101291001"
+        },
+        {
+          "city_name": "文山壮族苗族自治州",
+          "weather_code": "101291101"
+        },
+        {
+          "city_name": "西双版纳傣族自治州",
+          "weather_code": "101291201"
+        },
+        {
+          "city_name": "大理白族自治州",
+          "weather_code": "101291301"
+        },
+        {
+          "city_name": "德宏傣族景颇族自治州",
+          "weather_code": "101291401"
+        },
+        {
+          "city_name": "怒江傈僳族自治州",
+          "weather_code": "101291501"
+        },
+        {
+          "city_name": "迪庆藏族自治州",
+          "weather_code": "101291601"
+        }
+      ]
+    },
+    {
+      "province_name": "西藏自治区",
+      "cities": [
+        {
+          "city_name": "拉萨市",
+          "weather_code": "101140101"
+        },
+        {
+          "city_name": "日喀则市",
+          "weather_code": "101140201"
+        },
+        {
+          "city_name": "昌都市",
+          "weather_code": "101140301"
+        },
+        {
+          "city_name": "林芝市",
+          "weather_code": "101140401"
+        },
+        {
+          "city_name": "山南市",
+          "weather_code": "101140501"
+        },
+        {
+          "city_name": "那曲市",
+          "weather_code": "101140601"
+        },
+        {
+          "city_name": "阿里地区",
+          "weather_code": "101140701"
+        }
+      ]
+    },
+    {
+      "province_name": "陕西省",
+      "cities": [
+        {
+          "city_name": "西安市",
+          "weather_code": "101110101"
+        },
+        {
+          "city_name": "铜川市",
+          "weather_code": "101110201"
+        },
+        {
+          "city_name": "宝鸡市",
+          "weather_code": "101110301"
+        },
+        {
+          "city_name": "咸阳市",
+          "weather_code": "101110401"
+        },
+        {
+          "city_name": "渭南市",
+          "weather_code": "101110501"
+        },
+        {
+          "city_name": "延安市",
+          "weather_code": "101110601"
+        },
+        {
+          "city_name": "汉中市",
+          "weather_code": "101110701"
+        },
+        {
+          "city_name": "榆林市",
+          "weather_code": "101110801"
+        },
+        {
+          "city_name": "安康市",
+          "weather_code": "101110901"
+        },
+        {
+          "city_name": "商洛市",
+          "weather_code": "101111001"
+        }
+      ]
+    },
+    {
+      "province_name": "甘肃省",
+      "cities": [
+        {
+          "city_name": "兰州市",
+          "weather_code": "101160101"
+        },
+        {
+          "city_name": "嘉峪关市",
+          "weather_code": "101160201"
+        },
+        {
+          "city_name": "金昌市",
+          "weather_code": "101160301"
+        },
+        {
+          "city_name": "白银市",
+          "weather_code": "101160401"
+        },
+        {
+          "city_name": "天水市",
+          "weather_code": "101160501"
+        },
+        {
+          "city_name": "武威市",
+          "weather_code": "101160601"
+        },
+        {
+          "city_name": "张掖市",
+          "weather_code": "101160701"
+        },
+        {
+          "city_name": "平凉市",
+          "weather_code": "101160801"
+        },
+        {
+          "city_name": "酒泉市",
+          "weather_code": "101160901"
+        },
+        {
+          "city_name": "庆阳市",
+          "weather_code": "101161001"
+        },
+        {
+          "city_name": "定西市",
+          "weather_code": "101161101"
+        },
+        {
+          "city_name": "陇南市",
+          "weather_code": "101161201"
+        },
+        {
+          "city_name": "临夏回族自治州",
+          "weather_code": "101161301"
+        },
+        {
+          "city_name": "甘南藏族自治州",
+          "weather_code": "101161401"
+        }
+      ]
+    },
+    {
+      "province_name": "青海省",
+      "cities": [
+        {
+          "city_name": "西宁市",
+          "weather_code": "101150101"
+        },
+        {
+          "city_name": "海东市",
+          "weather_code": "101150201"
+        },
+        {
+          "city_name": "海北藏族自治州",
+          "weather_code": "101150301"
+        },
+        {
+          "city_name": "黄南藏族自治州",
+          "weather_code": "101150401"
+        },
+        {
+          "city_name": "海南藏族自治州",
+          "weather_code": "101150501"
+        },
+        {
+          "city_name": "果洛藏族自治州",
+          "weather_code": "101150601"
+        },
+        {
+          "city_name": "玉树藏族自治州",
+          "weather_code": "101150701"
+        },
+        {
+          "city_name": "海西蒙古族藏族自治州",
+          "weather_code": "101150801"
+        }
+      ]
+    },
+    {
+      "province_name": "宁夏回族自治区",
+      "cities": [
+        {
+          "city_name": "银川市",
+          "weather_code": "101170101"
+        },
+        {
+          "city_name": "石嘴山市",
+          "weather_code": "101170201"
+        },
+        {
+          "city_name": "吴忠市",
+          "weather_code": "101170301"
+        },
+        {
+          "city_name": "固原市",
+          "weather_code": "101170401"
+        },
+        {
+          "city_name": "中卫市",
+          "weather_code": "101170501"
+        }
+      ]
+    },
+    {
+      "province_name": "新疆维吾尔自治区",
+      "cities": [
+        {
+          "city_name": "乌鲁木齐市",
+          "weather_code": "101130101"
+        },
+        {
+          "city_name": "克拉玛依市",
+          "weather_code": "101130201"
+        },
+        {
+          "city_name": "吐鲁番市",
+          "weather_code": "101130301"
+        },
+        {
+          "city_name": "哈密市",
+          "weather_code": "101130401"
+        },
+        {
+          "city_name": "昌吉回族自治州",
+          "weather_code": "101130501"
+        },
+        {
+          "city_name": "博尔塔拉蒙古自治州",
+          "weather_code": "101130601"
+        },
+        {
+          "city_name": "巴音郭楞蒙古自治州",
+          "weather_code": "101130701"
+        },
+        {
+          "city_name": "阿克苏地区",
+          "weather_code": "101130801"
+        },
+        {
+          "city_name": "克孜勒苏柯尔克孜自治州",
+          "weather_code": "101130901"
+        },
+        {
+          "city_name": "喀什地区",
+          "weather_code": "101131001"
+        },
+        {
+          "city_name": "和田地区",
+          "weather_code": "101131101"
+        },
+        {
+          "city_name": "伊犁哈萨克自治州",
+          "weather_code": "101131201"
+        },
+        {
+          "city_name": "塔城地区",
+          "weather_code": "101131301"
+        },
+        {
+          "city_name": "阿勒泰地区",
+          "weather_code": "101131401"
+        },
+        {
+          "city_name": "石河子市",
+          "weather_code": "101131501"
+        },
+        {
+          "city_name": "阿拉尔市",
+          "weather_code": "101131601"
+        },
+        {
+          "city_name": "图木舒克市",
+          "weather_code": "101131701"
+        },
+        {
+          "city_name": "五家渠市",
+          "weather_code": "101131801"
+        },
+        {
+          "city_name": "北屯市",
+          "weather_code": "101131901"
+        },
+        {
+          "city_name": "铁门关市",
+          "weather_code": "101132001"
+        },
+        {
+          "city_name": "双河市",
+          "weather_code": "101132101"
+        },
+        {
+          "city_name": "可克达拉市",
+          "weather_code": "101132201"
+        },
+        {
+          "city_name": "昆玉市",
+          "weather_code": "101132301"
+        },
+        {
+          "city_name": "胡杨河市",
+          "weather_code": "101132401"
+        }
+      ]
+    },
+    {
+      "province_name": "香港特别行政区",
+      "cities": [
+        {
+          "city_name": "香港特别行政区",
+          "weather_code": "101320101"
+        }
+      ]
+    },
+    {
+      "province_name": "澳门特别行政区",
+      "cities": [
+        {
+          "city_name": "澳门特别行政区",
+          "weather_code": "101330101"
+        }
+      ]
+    },
+    {
+      "province_name": "台湾省",
+      "cities": [
+        {
+          "city_name": "台北市",
+          "weather_code": "101340101"
+        },
+        {
+          "city_name": "新北市",
+          "weather_code": ""
+        },
+        {
+          "city_name": "桃园市",
+          "weather_code": ""
+        },
+        {
+          "city_name": "台中市",
+          "weather_code": "101340401"
+        },
+        {
+          "city_name": "台南市",
+          "weather_code": "101340501"
+        },
+        {
+          "city_name": "高雄市",
+          "weather_code": "101340201"
+        },
+        {
+          "city_name": "基隆市",
+          "weather_code": "101340301"
+        },
+        {
+          "city_name": "新竹市",
+          "weather_code": "101340601"
+        },
+        {
+          "city_name": "嘉义市",
+          "weather_code": "101340701"
+        }
+      ]
+    }
+  ]
+}

@@ -118,14 +118,19 @@ const seededRandom = (seed) => {
 const generatePredictionData = (productName, cityName) => {
   const basePrice = 5 + seededRandom(productName.length + cityName.length) * 5
   const data = []
+  const today = new Date()
   
   for (let i = 1; i <= 5; i++) {
+    const date = new Date(today)
+    date.setDate(date.getDate() + i)
+    const dateStr = date.toISOString().split('T')[0].substring(5)
+    
     const daySeed = (productName.charCodeAt(i % productName.length || 0) + cityName.charCodeAt(i % cityName.length || 0)) * i
     const priceVariation = (seededRandom(daySeed) - 0.5) * 2
     const probability = 0.6 + seededRandom(daySeed + 100) * 0.35
     
     data.push({
-      day: `第${i}天`,
+      day: dateStr,
       price: Math.max(1, (basePrice + priceVariation).toFixed(1)),
       probability: Math.min(0.95, Math.max(0.5, probability))
     })
