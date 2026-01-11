@@ -42,10 +42,11 @@ const ignoredRegions = [
 
 // --- 颜色配置 (对应 visualMap 的四个层级) ---
 const colors = [
-  '#00465a', // Low
-  '#00759a', // Mid-Low
-  '#0abff3', // Mid-High
-  '#08e7de'  // High
+  
+  '#025a48', // Low (原 #00465a) - 深青绿
+  '#029a85', // Mid-Low (原 #00759a) - 中青绿
+  '#0af3c2', // Mid-High (原 #0abff3) - 亮薄荷绿
+  '#08e795'  // High (原 #08e7de) - 荧光绿
 ]
 
 // --- 工具函数：Hex 转 RGBA ---
@@ -76,15 +77,15 @@ const generateMockData = (geoJson) => {
       // 2. 为每个板块单独注入渐变样式
       itemStyle: {
         // LinearGradient(x1, y1, x2, y2, stops)
-        // 0,0,0,1 代表从图形上方到下方
+        // 0,0,0,1 代表从图形上方(0)到下方(1)
         areaColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
-            color: hexToRgba(baseColor, 1) // 顶部：不透明 (100%)
+            color: hexToRgba(baseColor, 1) // 【修改点】顶部：透明度 10% (0.1)
           },
           {
             offset: 1,
-            color: hexToRgba(baseColor, 0.2) // 底部：高透明 (20%)，实现渐变变淡效果
+            color: hexToRgba(baseColor, 0.1)   // 【修改点】底部：透明度 100% (1)
           }
         ])
       }
@@ -281,18 +282,20 @@ const setOptions = (mapName) => {
         return `${params.name}<br/>热度值: <span style="color:#08e7de;font-weight:bold;text-shadow:0 0 5px #08e7de;">${params.value}</span>`
       }
     },
-    // visualMap 配置保留，用于显示左下角的图例
-    // 注意：这里的 colors 顺序要和 generateMockData 里的逻辑对应
+    
+    // 图例配置保持不变
     visualMap: {
-      orient: 'horizontal', // 【修改】设置为水平方向
+      show: true,
+      seriesIndex: -1, // 保持这个！防止 visualMap 覆盖你的渐变色
+      orient: 'horizontal', 
       min: 0,
       max: 1000,
-      left: 'center',       // 【修改】水平放置时，建议居中显示（原为 '20'）
-      bottom: '30',         // 【微调】距离底部稍微抬高一点，避免贴底
-      text: ['高', '低'],    // 文本位置会自动适应
-      gap: 10,              // 两个手柄之间的距离
-      itemWidth: 20,        // 图形的宽度
-      itemHeight: 140,      // 图形的高度（水平模式下，这代表条状图的长度）
+      left: 'center',       
+      bottom: '30',         
+      text: ['高', '低'],    
+      gap: 10,              
+      itemWidth: 20,        
+      itemHeight: 140,      
       calculable: true,
       textStyle: {
         color: '#60EFDB'
@@ -300,33 +303,40 @@ const setOptions = (mapName) => {
       inRange: {
         color: colors 
       }
-    }
-    ,
+    },
+
+    // 【修改点1】隐藏 geo 组件，避免它抢占样式或造成重影
     geo: {
-      show: true,
+      show: false, 
       map: mapName,
       roam: true,
-      zoom: 1.2,
-      label: { show: false },
-      itemStyle: {
-        areaColor: 'rgba(0, 70, 90, 0.2)', 
-        borderColor: '#60EFDB', 
-        borderWidth: 1.5,
-        shadowColor: '#0abff3', 
-        shadowBlur: 15,
-        shadowOffsetY: 5 
-      },
-      emphasis: {
-        itemStyle: { areaColor: 'transparent' }
-      }
+      zoom: 1.2
     },
+
     series: [
       {
         type: 'map',
         map: mapName,
-        geoIndex: 0,
-        // 这里传入的 heatmapData 已经包含了每个板块的 itemStyle 渐变配置
+        // 【修改点2】删除 geoIndex: 0，让 series 独立渲染
+        // geoIndex: 0, 
+        
+        // 【修改点3】将原本 geo 中的漫游和缩放配置移到这里
+        roam: true,
+        zoom: 1.2,
+        
+        // 【修改点4】将 geo 的默认样式也移过来（作为兜底样式）
+        itemStyle: {
+          areaColor: 'rgba(0, 70, 90, 0.2)', 
+          borderColor: '#60EFDB', 
+          borderWidth: 1.5,
+          shadowColor: '#0abff3', 
+          shadowBlur: 15,
+          shadowOffsetY: 5 
+        },
+
+        // 这里传入的数据包含了你的渐变色 itemStyle
         data: heatmapData.value, 
+        
         emphasis: {
           label: { show: true, color: '#fff', fontSize: 14, fontWeight: 'bold' },
           itemStyle: {
