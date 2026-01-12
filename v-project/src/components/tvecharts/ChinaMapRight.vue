@@ -116,7 +116,21 @@ const seededRandom = (seed) => {
 
 // 根据蔬菜名称和城市生成5天预测数据
 const generatePredictionData = (productName, cityName) => {
-  const basePrice = 5 + seededRandom(productName.length + cityName.length) * 5
+  let basePrice = 0
+  const province = mapLocationStore.currentProvince || '河南省'
+  
+  if (province === '河南省' && productName === '大白菜') {
+    basePrice = 1.5 + Math.random() * 1.5
+  } else if (province === '河南省' && productName === '黄瓜') {
+    basePrice = 5.5 + Math.random() * 2.5
+  } else if (province === '四川省' && productName === '黄瓜') {
+    basePrice = 4 + Math.random() * 4
+  } else if (province === '四川省' && productName === '大白菜') {
+    basePrice = 2 + Math.random() * 1
+  } else {
+    basePrice = 5 + seededRandom(productName.length + cityName.length) * 5
+  }
+  
   const data = []
   const today = new Date()
   
@@ -126,7 +140,7 @@ const generatePredictionData = (productName, cityName) => {
     const dateStr = date.toISOString().split('T')[0].substring(5)
     
     const daySeed = (productName.charCodeAt(i % productName.length || 0) + cityName.charCodeAt(i % cityName.length || 0)) * i
-    const priceVariation = (seededRandom(daySeed) - 0.5) * 2
+    const priceVariation = (seededRandom(daySeed) - 0.5) * (basePrice * 0.2)
     const probability = 0.6 + seededRandom(daySeed + 100) * 0.35
     
     data.push({

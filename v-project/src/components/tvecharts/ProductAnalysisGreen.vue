@@ -268,6 +268,20 @@ const generateRandomPrice = (basePrice = 2.0) => {
   }))
 }
 
+const getBasePrice = (province, product) => {
+  if (province === '河南省' && product === '大白菜') {
+    return 1.5 + Math.random() * 1.5
+  } else if (province === '河南省' && product === '黄瓜') {
+    return 5.5 + Math.random() * 2.5
+  } else if (province === '四川省' && product === '黄瓜') {
+    return 4 + Math.random() * 4
+  } else if (province === '四川省' && product === '大白菜') {
+    return 2 + Math.random() * 1
+  } else {
+    return 2.0 + Math.random() * 3
+  }
+}
+
 const generateRandomVariance = () => {
   const markets = [
     '北京新发地', '上海江桥', '广州江南', '深圳海吉星', '杭州良渚',
@@ -287,6 +301,7 @@ const mockDataStyles = [
 
 const fetchData = async () => {
   const productName = mapProductStore.currentProduct || '大白菜'
+  const province = mapLocationStore.currentProvince || '河南省'
   currentProductName.value = productName
   loading.value = true
   isAllEmpty.value = false
@@ -294,8 +309,8 @@ const fetchData = async () => {
   try {
     let priceX = []
     let priceY = []
-    const style = mockDataStyles[Math.floor(Math.random() * mockDataStyles.length)]
-    const mockData = generateRandomPrice(style.priceBase)
+    const basePrice = getBasePrice(province, productName)
+    const mockData = generateRandomPrice(basePrice)
     priceX = mockData.map((item) => item.reporttime)
     priceY = mockData.map((item) => item.middleprice)
 
@@ -325,6 +340,10 @@ const handleResize = () => {
 }
 
 watch(() => mapProductStore.currentProduct, (newVal) => {
+  if (newVal) fetchData()
+})
+
+watch(() => mapLocationStore.currentProvince, (newVal) => {
   if (newVal) fetchData()
 })
 

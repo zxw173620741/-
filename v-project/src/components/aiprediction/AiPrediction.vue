@@ -195,7 +195,19 @@ const generatePredictionData = () => {
   const province = mapLocationStore.currentProvince || '河南省'
   const product = mapProductStore.currentProduct || '大白菜'
   
-  const basePriceVal = (Math.random() * 3 + 1)
+  let basePriceVal = 0
+  if (province === '河南省' && product === '大白菜') {
+    basePriceVal = 1.5 + Math.random() * 1.5
+  } else if (province === '河南省' && product === '黄瓜') {
+    basePriceVal = 5.5 + Math.random() * 2.5
+  } else if (province === '四川省' && product === '黄瓜') {
+    basePriceVal = 4 + Math.random() * 4
+  } else if (province === '四川省' && product === '大白菜') {
+    basePriceVal = 2 + Math.random() * 1
+  } else {
+    basePriceVal = Math.random() * 3 + 1
+  }
+  
   const basePrice = basePriceVal.toFixed(2)
   const trend = Math.random() > 0.5 ? '上升' : '下降'
   const trendClass = trend === '上升' ? 'trend-up' : 'trend-down'

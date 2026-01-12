@@ -6,7 +6,7 @@
         <span class="weather">天气：多云</span>
       </div>
       <div class="header-center">
-        <h1 class="title">中国城市农业数据可视化大屏</h1>
+        <h1 class="title">价溯云图</h1>
       </div>
       <div class="header-right">
         <button class="nav-btn" @click="toHome">成本计算器</button>
@@ -32,7 +32,7 @@
         <div class="card box-line">
           <div class="card-header">{{ mapLocationStore.currentProvince }}{{ mapProductStore.currentProduct }}价格趋势</div>
           <div class="card-body">
-            <TrendChart class="echarts-container" />
+            <TrendChart class="echarts-container" :modalVisible="showPricePrediction" />
           </div>
         </div>
       </aside>
@@ -126,24 +126,37 @@ const toggleVoiceRecognition = () => {
 
 const hello = (event) => {
   if (event.key === '1') {
+    event.preventDefault()
+    event.stopPropagation()
     speak('我在，有什么可以帮助到你')
     console.log('唤醒回应')
   }
   if (event.key === '2') {
+    event.preventDefault()
+    event.stopPropagation()
     speak('好的，我已切换四川省成都市的黄瓜 数据面板')
     chinaMapWrapperRef.value?.loadProvinceAndHighlightCity('四川省', '成都市')
     mapProductStore.setCurrentProduct('黄瓜')
     console.log('切换四川省成都市黄瓜')
   }
   if (event.key === '3') {
-    speak('四川省黄瓜价格波动明显，近五年最大价在 4到10元每公斤间起伏，均价呈伴随波动的稳定趋势，整体行情波动较大。')
+    event.preventDefault()
+    event.stopPropagation()
+    speak('四川省黄瓜价格，均价呈伴随波动的稳定趋势，整体行情波动较大。')
   }
   if (event.key === '4') {
+    event.preventDefault()
+    event.stopPropagation()
     speak('好的，即将为您执行命令')
   }
   if (event.key === '0') {
+    event.preventDefault()
+    event.stopPropagation()
     showPricePrediction.value = true
-    speak('已打开价格预测面板')
+    
+    setTimeout(() => {
+      speak('已打开价格预测面板')
+    }, 2000)
     console.log('打开价格预测')
   }
 }
@@ -214,11 +227,86 @@ body {
   border-bottom: 2px solid #42e3a4;
 }
 
+.header-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .title {
-  font-size: 24px;
-  color: #42e3a4;
-  text-shadow: 0 0 10px rgba(66, 227, 164, 0.5);
-  letter-spacing: 2px;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #42e3a4 0%, #00a884 50%, #42e3a4 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(66, 227, 164, 0.8),
+               0 0 40px rgba(66, 227, 164, 0.4),
+               0 0 60px rgba(66, 227, 164, 0.2);
+  letter-spacing: 8px;
+  position: relative;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.title::before {
+  content: '价溯云图';
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  filter: blur(8px);
+  animation: glow 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #42e3a4, #ffd700, #42e3a4, transparent);
+  border-radius: 2px;
+  animation: line-expand 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes line-expand {
+  0%, 100% {
+    width: 40%;
+    opacity: 0.5;
+  }
+  50% {
+    width: 80%;
+    opacity: 1;
+  }
 }
 
 .nav-btn {

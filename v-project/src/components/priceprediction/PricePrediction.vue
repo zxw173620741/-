@@ -23,93 +23,109 @@
         
         <div class="hero-section">
           <div class="product-tag-float">
-            <span class="p-icon">🥒</span> 精选黄瓜 (Category A)
+            <span class="p-icon">🥒</span> {{ selectedProduct }} (Category A)
           </div>
           
           <div class="date-hero-wrapper">
             <label class="hero-label">PREDICTION TARGET DATE</label>
-            <div class="date-display-box">
+            <div class="date-display-box" :class="{ 'disabled': isLoading }">
               <input 
                 v-model="targetDate" 
                 type="date" 
                 class="hero-date-input"
                 :min="minDate"
+                :disabled="isLoading"
               >
-              <span class="edit-hint">点击更改日期</span>
+              <span class="edit-hint" v-if="!isLoading">点击更改日期</span>
             </div>
           </div>
         </div>
 
-        <div class="dashboard-grid">
-          <div class="metric-card price-card">
-            <div class="card-header">
-              <span class="card-label">预测单价</span>
-              <span class="live-badge">AI LIVE</span>
-            </div>
-            <div class="price-display">
-              <span class="currency">¥</span>
-              <span class="big-number">{{ predictedPrice }}</span>
-              <span class="unit">/kg</span>
-            </div>
-            <div class="trend-row">
-              <div class="trend-badge" :class="trendClass">
-                <span class="trend-arrow">{{ trendIcon }}</span> {{ trendText }}
+        <div v-if="isLoading" class="loading-container">
+          <div class="scanner-wrapper">
+            <div class="scan-ring"></div>
+            <div class="scan-core"></div>
+          </div>
+          <div class="loading-text">
+            AGR-BRAIN 引擎正在分析中
+            <span class="dot-flashing"></span>
+          </div>
+          <div class="loading-sub">正在检索气象数据与历史行情...</div>
+        </div>
+
+        <div v-else class="result-container animate-fade-in">
+          <div class="dashboard-grid">
+            <div class="metric-card price-card">
+              <div class="card-header">
+                <span class="card-label">预测单价</span>
+                <span class="live-badge">AI LIVE</span>
               </div>
-              <span class="diff-text" :class="diffClass">{{ priceDiff }}</span>
+              <div class="price-display">
+                <span class="currency">¥</span>
+                <span class="big-number">{{ predictedPrice }}</span>
+                <span class="unit">/kg</span>
+              </div>
+              <div class="trend-row">
+                <div class="trend-badge" :class="trendClass">
+                  <span class="trend-arrow">{{ trendIcon }}</span> {{ trendText }}
+                </div>
+                <span class="diff-text" :class="diffClass">{{ priceDiff }}</span>
+              </div>
+            </div>
+
+            <div class="metric-card analysis-card">
+              <div class="card-label">影响因子分析</div>
+              <div class="factor-list">
+                <div class="factor-item">
+                  <span class="f-name">🌦️ 气象条件</span>
+                  <div class="f-bar-bg"><div class="f-bar" :style="{width: factors.weather + '%', background: '#42e3a4'}"></div></div>
+                  <span class="f-val">{{ factors.weather }}%</span>
+                </div>
+                <div class="factor-item">
+                  <span class="f-name">📦 库存周转</span>
+                  <div class="f-bar-bg"><div class="f-bar" :style="{width: factors.inventory + '%', background: '#ffd700'}"></div></div>
+                  <span class="f-val">{{ factors.inventory }}%</span>
+                </div>
+                <div class="factor-item">
+                  <span class="f-name">🚚 物流成本</span>
+                  <div class="f-bar-bg"><div class="f-bar" :style="{width: factors.logistics + '%', background: '#ff6b6b'}"></div></div>
+                  <span class="f-val">{{ factors.logistics }}%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="metric-card confidence-card">
+              <div class="card-label">模型准确率</div>
+              <div class="confidence-circle">
+                <svg viewBox="0 0 36 36" class="circular-chart">
+                  <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path class="circle" :stroke-dasharray="`${confidence}, 100`" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <div class="percentage-text">{{ confidence }}<span class="pct">%</span></div>
+              </div>
+              <div class="risk-label">风险等级: <span style="color:#42e3a4">低</span></div>
             </div>
           </div>
 
-          <div class="metric-card analysis-card">
-            <div class="card-label">影响因子分析</div>
-            <div class="factor-list">
-              <div class="factor-item">
-                <span class="f-name">🌦️ 气象条件</span>
-                <div class="f-bar-bg"><div class="f-bar" :style="{width: factors.weather + '%', background: '#42e3a4'}"></div></div>
-                <span class="f-val">{{ factors.weather }}%</span>
+          <div class="chart-section">
+            <div class="chart-header">
+              <div class="chart-title">
+                <span class="chart-icon">📈</span> 近7日走势拟合 & 未来预测
               </div>
-              <div class="factor-item">
-                <span class="f-name">📦 库存周转</span>
-                <div class="f-bar-bg"><div class="f-bar" :style="{width: factors.inventory + '%', background: '#ffd700'}"></div></div>
-                <span class="f-val">{{ factors.inventory }}%</span>
-              </div>
-              <div class="factor-item">
-                <span class="f-name">🚚 物流成本</span>
-                <div class="f-bar-bg"><div class="f-bar" :style="{width: factors.logistics + '%', background: '#ff6b6b'}"></div></div>
-                <span class="f-val">{{ factors.logistics }}%</span>
+              <div class="legend">
+                <span class="dot history"></span>历史数据
+                <span class="dot predict"></span>AI预测点
               </div>
             </div>
-          </div>
-
-          <div class="metric-card confidence-card">
-            <div class="card-label">模型准确率</div>
-            <div class="confidence-circle">
-              <svg viewBox="0 0 36 36" class="circular-chart">
-                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path class="circle" :stroke-dasharray="`${confidence}, 100`" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              </svg>
-              <div class="percentage-text">{{ confidence }}<span class="pct">%</span></div>
-            </div>
-            <div class="risk-label">风险等级: <span style="color:#42e3a4">低</span></div>
+            <div ref="chartRef" class="chart-container"></div>
           </div>
         </div>
 
-        <div class="chart-section">
-          <div class="chart-header">
-            <div class="chart-title">
-              <span class="chart-icon">📈</span> 近7日走势拟合 & 未来预测
-            </div>
-            <div class="legend">
-              <span class="dot history"></span>历史数据
-              <span class="dot predict"></span>AI预测点
-            </div>
-          </div>
-          <div ref="chartRef" class="chart-container"></div>
-        </div>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-secondary" @click="close">取消操作</button>
-        <button class="btn btn-primary" @click="confirmPrediction">
+        <button class="btn btn-primary" @click="confirmPrediction" :disabled="isLoading" :style="{ opacity: isLoading ? 0.5 : 1 }">
           <span class="btn-icon">⚡</span> 采纳该预测值
         </button>
       </div>
@@ -120,6 +136,7 @@
 <script setup>
 import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
+import { mapLocation, mapProduct } from '../../stores/store.js'
 
 const props = defineProps({
   visible: {
@@ -130,23 +147,44 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'confirm'])
 
-// 状态定义
+// Store
+const mapLocationStore = mapLocation()
+const mapProductStore = mapProduct()
+
+const productName = computed(() => mapProductStore.currentProduct)
+const provinceName = computed(() => mapLocationStore.currentProvince)
+
+// State
 const targetDate = ref('')
-const selectedProduct = ref('黄瓜') 
+const selectedProduct = ref(productName.value || '黄瓜')
 const chartRef = ref(null)
+const isLoading = ref(false) // 新增 Loading 状态
 let chartInstance = null
 
-const predictedPrice = ref('5.68')
-const confidence = ref('85')
-// 新增：模拟的影响因子数据
-const factors = ref({ weather: 80, inventory: 45, logistics: 30 })
+const predictedPrice = ref('0.00')
+const confidence = ref('0')
+const factors = ref({ weather: 0, inventory: 0, logistics: 0 })
 
 const minDate = computed(() => {
   const today = new Date()
   return today.toISOString().split('T')[0]
 })
 
-// 计算属性：价格趋势
+const defaultDate = computed(() => {
+  const today = new Date()
+  today.setDate(today.getDate() + 2)
+  return today.toISOString().split('T')[0]
+})
+
+// 监听 store 变化，如果弹窗开着就重新预测
+watch([productName, provinceName], () => {
+  selectedProduct.value = productName.value || '黄瓜'
+  if (props.visible) {
+    generatePrediction()
+  }
+})
+
+// 计算属性：趋势
 const trendClass = computed(() => {
   const price = parseFloat(predictedPrice.value)
   if (price > 6) return 'trend-up'
@@ -168,7 +206,7 @@ const trendText = computed(() => {
   return '市场平稳'
 })
 
-// 计算环比涨跌幅文字
+// 计算属性：环比
 const priceDiff = computed(() => {
   const current = parseFloat(predictedPrice.value)
   const base = 5.0
@@ -180,19 +218,52 @@ const diffClass = computed(() => {
   return parseFloat(predictedPrice.value) >= 5 ? 'diff-up' : 'diff-down'
 })
 
-// 核心逻辑：生成模拟预测数据
+// 核心逻辑：生成预测 (带模拟延迟)
 const generatePrediction = () => {
-  const basePrice = 5
-  const variance = (Math.random() - 0.5) * 3
-  predictedPrice.value = (basePrice + variance).toFixed(2)
-  confidence.value = Math.floor(80 + Math.random() * 18)
+  // 1. 开启 Loading
+  isLoading.value = true
   
-  // 随机生成影响因子，让数据看起来更真实
-  factors.value = {
-    weather: Math.floor(Math.random() * 40 + 50),
-    inventory: Math.floor(Math.random() * 60 + 20),
-    logistics: Math.floor(Math.random() * 30 + 10)
+  // 销毁旧图表，防止残留
+  if (chartInstance) {
+    chartInstance.dispose()
+    chartInstance = null
   }
+
+  // 2. 模拟 1.5秒 AI 计算延迟
+  setTimeout(async () => {
+    let basePrice = 0
+    
+    // 简单的模拟逻辑
+    if (provinceName.value === '河南省' && productName.value === '大白菜') {
+      basePrice = 1.5 + Math.random() * 1.5
+    } else if (provinceName.value === '河南省' && productName.value === '黄瓜') {
+      basePrice = 5.5 + Math.random() * 2.5
+    } else if (provinceName.value === '四川省' && productName.value === '黄瓜') {
+      basePrice = 4 + Math.random() * 4
+    } else if (provinceName.value === '四川省' && productName.value === '大白菜') {
+      basePrice = 2 + Math.random() * 1
+    } else {
+      basePrice = 5
+    }
+    
+    const variance = (Math.random() - 0.5) * 0.5
+    predictedPrice.value = (basePrice + variance).toFixed(2)
+    confidence.value = Math.floor(80 + Math.random() * 18)
+    
+    factors.value = {
+      weather: Math.floor(Math.random() * 40 + 50),
+      inventory: Math.floor(Math.random() * 60 + 20),
+      logistics: Math.floor(Math.random() * 30 + 10)
+    }
+
+    // 3. 计算完成，关闭 Loading
+    isLoading.value = false
+    
+    // 4. 等待 DOM 渲染完毕后初始化图表
+    await nextTick()
+    initChart()
+    
+  }, 1500)
 }
 
 // 图表初始化
@@ -205,16 +276,17 @@ const initChart = () => {
   const prices = []
   const today = new Date()
   
-  // 生成历史数据
+  // 简单的基准价格逻辑用于图表历史数据
+  let basePrice = parseFloat(predictedPrice.value) || 5
+  
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today)
     date.setDate(date.getDate() - i)
     dates.push(date.toISOString().split('T')[0].substring(5))
     // 制造一些波动
-    prices.push((5 + Math.sin(i) * 0.8 + (Math.random()-0.5)).toFixed(2))
+    prices.push((basePrice + Math.sin(i) * 0.5 + (Math.random() - 0.5) * 0.3).toFixed(2))
   }
   
-  // 添加预测点
   dates.push(targetDate.value ? targetDate.value.substring(5) : '预测')
   prices.push(predictedPrice.value)
   
@@ -299,6 +371,7 @@ const close = () => {
 }
 
 const confirmPrediction = () => {
+  if (isLoading.value) return
   emit('confirm', {
     date: targetDate.value,
     product: selectedProduct.value,
@@ -308,12 +381,12 @@ const confirmPrediction = () => {
   close()
 }
 
-watch(() => props.visible, async (newVal) => {
+// 监听 visible 属性
+watch(() => props.visible, (newVal) => {
   if (newVal) {
-    targetDate.value = minDate.value
+    targetDate.value = defaultDate.value
+    // 打开弹窗时，触发带 loading 的预测
     generatePrediction()
-    await nextTick()
-    initChart()
   } else {
     if (chartInstance) {
       chartInstance.dispose()
@@ -322,10 +395,11 @@ watch(() => props.visible, async (newVal) => {
   }
 })
 
-watch(targetDate, () => {
-  if (props.visible) {
+// 监听日期变化
+watch(targetDate, (newVal, oldVal) => {
+  // 防止在关闭弹窗清空日期时触发
+  if (props.visible && newVal) {
     generatePrediction()
-    if (chartInstance) initChart()
   }
 })
 
@@ -394,9 +468,9 @@ onUnmounted(() => {
 }
 .close-btn:hover { color: #fff; transform: rotate(90deg); }
 
-.modal-body { padding: 30px 40px; }
+.modal-body { padding: 30px 40px; min-height: 400px; }
 
-/* 1. Hero 区域：日期放大居中 */
+/* Hero 区域 */
 .hero-section {
   text-align: center;
   margin-bottom: 35px;
@@ -416,6 +490,9 @@ onUnmounted(() => {
 .date-display-box {
   position: relative; display: inline-block;
 }
+.date-display-box.disabled {
+  opacity: 0.5; pointer-events: none; filter: grayscale(1);
+}
 .hero-date-input {
   background: transparent; border: none; outline: none;
   font-family: 'JetBrains Mono', monospace;
@@ -425,7 +502,7 @@ onUnmounted(() => {
   padding-bottom: 5px; cursor: pointer;
   text-shadow: 0 0 20px rgba(66, 227, 164, 0.3);
   transition: all 0.3s;
-  width: 320px; /* 确保宽度足够显示日期 */
+  width: 320px;
 }
 .hero-date-input:focus {
   border-bottom-color: #ffd700;
@@ -437,11 +514,37 @@ onUnmounted(() => {
 }
 .date-display-box:hover .edit-hint { opacity: 1; transform: translateY(0); }
 
-/* 2. 仪表盘网格 */
+/* --- 加载动画样式 --- */
+.loading-container {
+  height: 300px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+.scanner-wrapper {
+  position: relative; width: 80px; height: 80px; margin-bottom: 25px;
+}
+.scan-ring {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  border: 4px solid transparent;
+  border-top-color: #42e3a4; border-right-color: rgba(66, 227, 164, 0.3);
+  border-radius: 50%; animation: spin 1s linear infinite;
+}
+.scan-core {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 40%; height: 40%; background: #ffd700;
+  border-radius: 50%; box-shadow: 0 0 15px #ffd700;
+  animation: pulse-core 1s ease-in-out infinite;
+}
+.loading-text {
+  font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #fff;
+  font-weight: bold; letter-spacing: 1px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px;
+}
+.loading-sub { font-size: 12px; color: rgba(66, 227, 164, 0.7); }
+
+/* 仪表盘 */
 .dashboard-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1.2fr 0.8fr;
-  gap: 20px;
+  display: grid; grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 20px;
   margin-bottom: 25px;
 }
 .metric-card {
@@ -450,8 +553,6 @@ onUnmounted(() => {
   border-radius: 16px; padding: 20px;
   position: relative;
 }
-
-/* 价格卡片样式 */
 .price-card { background: linear-gradient(145deg, rgba(66, 227, 164, 0.05), transparent); }
 .card-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
 .card-label { font-size: 12px; color: #8aa; }
@@ -473,7 +574,7 @@ onUnmounted(() => {
 .diff-text { font-family: 'JetBrains Mono'; font-size: 12px; }
 .diff-up { color: #ff6b6b; } .diff-down { color: #42e3a4; }
 
-/* 归因分析样式 */
+/* 归因分析 */
 .factor-list { display: flex; flex-direction: column; gap: 12px; margin-top: 5px; }
 .factor-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #ccc; }
 .f-name { width: 70px; }
@@ -481,7 +582,7 @@ onUnmounted(() => {
 .f-bar { height: 100%; border-radius: 3px; transition: width 1s ease; }
 .f-val { width: 30px; text-align: right; font-family: 'JetBrains Mono'; opacity: 0.8; }
 
-/* 置信度样式 */
+/* 置信度 */
 .confidence-card { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .confidence-circle { width: 70px; height: 70px; position: relative; margin-bottom: 10px; }
 .circular-chart { display: block; margin: 0 auto; max-width: 100%; max-height: 100%; }
@@ -510,6 +611,9 @@ onUnmounted(() => {
 .dot.predict { background: #ffd700; box-shadow: 0 0 6px #ffd700; }
 .chart-container { width: 100%; height: 180px; }
 
+/* 结果淡入 */
+.animate-fade-in { animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
 /* 底部按钮 */
 .modal-footer {
   padding: 20px 40px; border-top: 1px solid rgba(255,255,255,0.05);
@@ -525,10 +629,40 @@ onUnmounted(() => {
   background: linear-gradient(135deg, #42e3a4 0%, #00a884 100%); color: #051a15;
   box-shadow: 0 8px 25px rgba(66,227,164,0.2); display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(66,227,164,0.3); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(66,227,164,0.3); }
+.btn-primary:disabled { cursor: not-allowed; filter: grayscale(0.5); }
 
+/* 关键帧动画 */
 @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pulse-core {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; box-shadow: 0 0 25px #ffd700; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 点点点动画 */
+.dot-flashing {
+  position: relative; width: 4px; height: 4px; margin-left: 10px;
+  border-radius: 2px; background-color: #42e3a4; color: #42e3a4;
+  animation: dot-flashing 1s infinite linear alternate; animation-delay: 0.5s;
+}
+.dot-flashing::before, .dot-flashing::after {
+  content: ''; display: inline-block; position: absolute; top: 0;
+  width: 4px; height: 4px; border-radius: 2px; background-color: #42e3a4; color: #42e3a4;
+  animation: dot-flashing 1s infinite alternate;
+}
+.dot-flashing::before { left: -8px; animation-delay: 0s; }
+.dot-flashing::after { left: 8px; animation-delay: 1s; }
+
+@keyframes dot-flashing {
+  0% { background-color: #42e3a4; }
+  50%, 100% { background-color: rgba(66, 227, 164, 0.2); }
+}
 
 /* 移动端适配 */
 @media (max-width: 768px) {

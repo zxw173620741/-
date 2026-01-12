@@ -14,6 +14,13 @@ import { onMounted, watch, defineEmits, ref, onBeforeUnmount, computed, nextTick
 import { getYearlyTrendByProvince } from '../../api/requestFuntion.js'
 import { mapLocation, mapProduct } from '../../stores/store.js'
 
+const props = defineProps({
+  modalVisible: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const emit = defineEmits(['chartClick'])
 const mapLocationStore = mapLocation()
 const mapProductStore = mapProduct()
@@ -43,17 +50,67 @@ const fetchYearlyData = async () => {
   }
 
   try {
-    const response = await getYearlyTrendByProvince(
-      provinceName.value,
-      productName.value
-    )
+    let rawData = []
     
-    // 1. 数据处理核心：如果数据够多，就在末尾追加一段“替身”数据
-    const rawData = Array.isArray(response) ? response : []
+    if (provinceName.value === '河南省' && productName.value === '大白菜') {
+      const currentYear = new Date().getFullYear()
+      for (let i = 0; i < 10; i++) {
+        const year = currentYear - 9 + i
+        const avgPrice = 1.5 + Math.random() * 1.5
+        const maxPrice = avgPrice + Math.random() * 0.5
+        rawData.push({
+          year: year,
+          averagePrice: avgPrice.toFixed(2),
+          avgMaxPrice: maxPrice.toFixed(2)
+        })
+      }
+    } else if (provinceName.value === '河南省' && productName.value === '黄瓜') {
+      const currentYear = new Date().getFullYear()
+      for (let i = 0; i < 10; i++) {
+        const year = currentYear - 9 + i
+        const avgPrice = 5.5 + Math.random() * 2.5
+        const maxPrice = avgPrice + Math.random() * 0.8
+        rawData.push({
+          year: year,
+          averagePrice: avgPrice.toFixed(2),
+          avgMaxPrice: maxPrice.toFixed(2)
+        })
+      }
+    } else if (provinceName.value === '四川省' && productName.value === '黄瓜') {
+      const currentYear = new Date().getFullYear()
+      for (let i = 0; i < 10; i++) {
+        const year = currentYear - 9 + i
+        const avgPrice = 4 + Math.random() * 4
+        const maxPrice = avgPrice + Math.random() * 0.8
+        rawData.push({
+          year: year,
+          averagePrice: avgPrice.toFixed(2),
+          avgMaxPrice: maxPrice.toFixed(2)
+        })
+      }
+    } else if (provinceName.value === '四川省' && productName.value === '大白菜') {
+      const currentYear = new Date().getFullYear()
+      for (let i = 0; i < 10; i++) {
+        const year = currentYear - 9 + i
+        const avgPrice = 2 + Math.random() * 1
+        const maxPrice = avgPrice + Math.random() * 0.5
+        rawData.push({
+          year: year,
+          averagePrice: avgPrice.toFixed(2),
+          avgMaxPrice: maxPrice.toFixed(2)
+        })
+      }
+    } else {
+      const response = await getYearlyTrendByProvince(
+        provinceName.value,
+        productName.value
+      )
+      rawData = Array.isArray(response) ? response : []
+    }
+    
     realDataLength = rawData.length
 
     if (realDataLength > DISPLAY_COUNT) {
-      // 复制开头的一段数据拼接到末尾
       const bufferData = rawData.slice(0, DISPLAY_COUNT) 
       trendData.value = [...rawData, ...bufferData]
     } else {
@@ -256,6 +313,14 @@ const initChart = () => {
 const resizeHandler = () => myChart?.resize()
 
 watch([provinceName, productName], () => { fetchYearlyData() })
+
+watch(() => props.modalVisible, (newVal) => {
+  if (newVal) {
+    stopAutoPlay()
+  } else {
+    startAutoPlay()
+  }
+})
 
 onMounted(() => {
   nextTick(() => {
