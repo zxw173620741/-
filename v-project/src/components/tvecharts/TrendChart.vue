@@ -269,7 +269,6 @@ const startAutoPlay = () => {
     
     // 可选：高亮中间柱子
     const centerIndex = Math.floor(currentStart + (DISPLAY_COUNT / 2))
-    myChart.dispatchAction({ type: 'showTip', seriesIndex: 0, dataIndex: centerIndex })
 
   }, 2000) // 2秒滚动一次
 }

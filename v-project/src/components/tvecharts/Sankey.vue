@@ -20,372 +20,202 @@ const queryData = {
   province: mapLocationStore.currentProvince,
 }
 
-// --- 1. 修改配色方案为科技霓虹色 ---
+// --- 1. 现代化配色方案：采用同色系梯度，减少视觉杂乱 ---
 const techColorPalette = [
-  '#00ffff', // 青色
-  '#0099ff', // 天蓝
-  '#3366ff', // 湛蓝
-  '#9900ff', // 紫罗兰
-  '#ff00ff', // 洋红
-  '#ff3399', // 荧光粉
-  '#ff6600', // 亮橙
-  '#ffff00', // 荧光黄
-  '#66ff66', // 荧光绿
-  '#00ff99', // 青绿
-  '#FFFFFF'  // 纯白点缀
+  '#00f2ff', // 主亮青
+  '#009dff', // 科技蓝
+  '#4e77ff', // 靛蓝
+  '#a855f7', // 优雅紫
+  '#22d3ee', // 淡青
+  '#818cf8', // 浅靛蓝
 ];
 
-// 获取颜色的辅助函数，循环使用色板
 const getUniqueColor = (index) => {
   return techColorPalette[index % techColorPalette.length];
 }
 
-// --- 修改结束 ---
-
 const option = {
-  // --- 2. 修改背景色为深空蓝/黑 ---
-  backgroundColor: '#050d19', // 或者用透明，依赖外部容器背景
-  // --- 修改结束 ---
+  backgroundColor: 'transparent', // 背景交给CSS处理，更具通透感
   series: [
     {
       type: 'sankey',
       left: '5%',
-      right: '5%',
-      top: '10%', // 稍微调整顶部距离
-      bottom: '10%',
-      nodeWidth: 25, // 稍微加宽节点
-      nodeGap: 16, // 增加节点间距
+      right: '18%', 
+      top: '8%',
+      bottom: '8%',
+      nodeWidth: 12, // 【关键修改】减窄节点宽度，更显精致，不笨重
+      nodeGap: 18,   // 适当的间距
+      draggable: false,
+      layoutIterations: 32,
       data: [],
       links: [],
-      // --- 3. 修改线条样式，增加发光效果 ---
+      // 优化线条：低透明度、更平滑的曲线
       lineStyle: {
-        color: 'source', // 颜色跟随源节点，形成渐变流光
-        curveness: 0.6, // 稍微增加曲率
-        opacity: 0.4, // 提高一点基础透明度
-        shadowColor: 'rgba(0, 255, 255, 0.5)', // 线条发光色
-        shadowBlur: 10 // 发光模糊度
+        color: 'source',
+        curveness: 0.5,
+        opacity: 0.25, // 【关键修改】大幅降低初始透明度，现代感的秘诀
       },
-      // --- 4. 修改节点样式，增加强烈的科技感边框和发光 ---
+      // 优化节点：去掉厚重的发光，改用轻薄的边框
       itemStyle: {
-        borderWidth: 2,
-        borderColor: '#00ffff', // 统一使用青色高亮边框
-        shadowColor: 'rgba(0, 255, 255, 0.8)', // 强烈的外发光
-        shadowBlur: 20
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.3)',
       },
-      // --- 5. 修改标签样式，增加文字发光 ---
+      // 优化标签：更清爽的排版
       label: {
-        color: '#ffffff',
-        fontFamily: '"Orbitron", "Microsoft YaHei", Arial, sans-serif', // 尝试使用科技感字体
+        color: '#a5f3fc',
+        fontFamily: 'Microsoft YaHei',
         fontSize: 12,
-        fontWeight: 600,
-        textShadowColor: '#00ffff', // 文字发光
-        textShadowBlur: 5,
-        formatter: '{b}'
+        fontWeight: 400,
+        distance: 10
       },
       emphasis: {
         focus: 'adjacency',
         lineStyle: {
-          opacity: 0.8,
-          shadowBlur: 20, // 高亮时增强发光
-          shadowColor: 'rgba(255, 255, 255, 0.8)'
+          opacity: 0.7, // 鼠标悬停时才加亮
         },
         itemStyle: {
-          shadowBlur: 30,
-          shadowColor: '#ffffff', // 高亮时变白光
-          borderColor: '#ffffff'
-        },
+          shadowBlur: 10,
+          shadowColor: '#00f2ff',
+        }
       },
     },
   ],
-  // --- 6. 修改提示框样式以匹配科技风 ---
   tooltip: {
     trigger: 'item',
-    backgroundColor: 'rgba(5, 13, 25, 0.9)', // 深色背景
-    borderColor: '#00ffff', // 青色边框
+    backgroundColor: 'rgba(7, 26, 55, 0.9)',
+    borderColor: '#22d3ee',
     borderWidth: 1,
-    padding: [10, 15],
-    textStyle: {
-      color: '#fff',
-      fontSize: 13,
-      textShadowColor: 'rgba(0, 255, 255, 0.5)',
-      textShadowBlur: 2
-    },
+    textStyle: { color: '#fff' },
     formatter: (params) => {
       if (params.dataType === 'node') {
-        // 标题使用霓虹色
-        return `<div style="color: #00ffff; font-weight: bold; font-size: 14px; margin-bottom: 5px;">⬢ ${params.name}</div>`
-      } else if (params.dataType === 'link') {
-        return `
-          <div style="color: #0099ff; margin-bottom: 6px;">▶ ${params.data.source} → ${params.data.target}</div>
-          <div style="color: #ff00ff; font-weight: bold;">⚡ 交易量: <span style="color:#ffffff; font-family: monospace; font-size: 1.1em;">${params.data.value.toLocaleString()}</span> 吨</div>
-        `
+        return `<div style="padding:3px 8px;">📊 节点: <b>${params.name}</b></div>`
       }
-      return ''
+      return `
+        <div style="padding:5px;">
+          <span style="color:#94a3b8">流向：</span>${params.data.source} ➜ ${params.data.target}<br/>
+          <span style="color:#22d3ee">交易量：</span><b style="font-size:1.1em">${params.data.value}</b> 吨
+        </div>
+      `
     },
   },
 }
 
-// --- 数据转换函数修改 ---
-// 移除旧的 HSL 生成代码，使用新的 getUniqueColor
 const transformToSankeyData = (rawData) => {
   const nodes = []
   const nodeMap = new Map()
   const links = []
   const linkMap = new Map()
-  const vegetables = []
 
   let colorIndex = 0;
 
-  // 辅助函数：添加节点
-  const addNode = (name) => {
+  const addNode = (name, level) => {
     if (!nodeMap.has(name)) {
       const color = getUniqueColor(colorIndex++);
-      nodeMap.set(name, nodes.length)
+      let labelConfig = { position: 'right' };
+      
+      // 第1层居左显示，第2层和第3层居右显示，避免文字重叠
+      if (level === 0) {
+        labelConfig = { position: 'left', distance: 15 };
+      }
+
       nodes.push({
         name: name,
-        // 这里只设置填充色，边框和阴影由全局 itemStyle 控制
-        itemStyle: {
-          color: color,
-          // 如果希望边框颜色也跟随自身颜色而不是统一青色，取消下面注释，并注释掉全局配置中的 borderColor
-          // borderColor: color,
-          // shadowColor: color
-        },
-      })
+        itemStyle: { color: color },
+        label: labelConfig
+      });
+      nodeMap.set(name, nodes.length - 1);
       return true;
     }
     return false;
   }
 
   rawData.forEach((item) => {
-    addNode(item.oneLevel);
-    addNode(item.twoLevel);
-    if (addNode(item.varietyname)) {
-        vegetables.push(item.varietyname)
-    }
+    addNode(item.oneLevel, 0);
+    addNode(item.twoLevel, 1);
+    addNode(item.varietyname, 2);
   })
 
   rawData.forEach((item) => {
-    // Level 1 -> Level 2
-    const keyLv1ToLv2 = `${item.oneLevel}|${item.twoLevel}`
-    linkMap.set(keyLv1ToLv2, (linkMap.get(keyLv1ToLv2) || 0) + item.totalExportVolume)
-
-    // Level 2 -> Level 3 (Variety)
-    const keyLv2ToLv3 = `${item.twoLevel}|${item.varietyname}`
-    linkMap.set(keyLv2ToLv3, (linkMap.get(keyLv2ToLv3) || 0) + item.totalExportVolume)
+    const k1 = `${item.oneLevel}|${item.twoLevel}`
+    linkMap.set(k1, (linkMap.get(k1) || 0) + item.totalExportVolume)
+    const k2 = `${item.twoLevel}|${item.varietyname}`
+    linkMap.set(k2, (linkMap.get(k2) || 0) + item.totalExportVolume)
   })
 
   linkMap.forEach((value, key) => {
-    const [sourceName, targetName] = key.split('|')
-    links.push({
-      source: sourceName,
-      target: targetName,
-      value: value,
-    })
+    const [source, target] = key.split('|')
+    links.push({ source, target, value })
   })
 
-  return { nodes, links, vegetables }
+  return { nodes, links }
 }
-// --- 数据转换函数修改结束 ---
 
 const initData = async () => {
-  console.log('=== 桑吉图初始化日志 ===')
   queryData.province = mapLocationStore.currentProvince
-  console.log('1. 当前省份：', queryData.province)
-
-  const mockDataGroups = [
-    [
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '蔬菜类监测点', varietyname: '大白菜', totalExportVolume: 1500 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '蔬菜类监测点', varietyname: '萝卜', totalExportVolume: 800 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '蔬菜类监测点', varietyname: '辣椒', totalExportVolume: 1200 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '水果类监测点', varietyname: '苹果', totalExportVolume: 1400 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '水果类监测点', varietyname: '梨', totalExportVolume: 600 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '谷物类战略储备', varietyname: '小麦', totalExportVolume: 2000 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '谷物类战略储备', varietyname: '玉米', totalExportVolume: 2500 },
-      { oneLevel: '外部协同节点', twoLevel: '谷物类战略储备', varietyname: '大豆', totalExportVolume: 1800 },
-    ],
-    [
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '叶菜类监测点', varietyname: '菠菜', totalExportVolume: 950 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '叶菜类监测点', varietyname: '生菜', totalExportVolume: 1100 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '根茎类监测点', varietyname: '土豆', totalExportVolume: 2200 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '根茎类监测点', varietyname: '胡萝卜', totalExportVolume: 1300 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '柑橘类监测点', varietyname: '橘子', totalExportVolume: 1700 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '柑橘类监测点', varietyname: '橙子', totalExportVolume: 1600 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '豆类战略储备', varietyname: '绿豆', totalExportVolume: 900 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '豆类战略储备', varietyname: '红豆', totalExportVolume: 850 },
-    ],
-    [
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '茄果类监测点', varietyname: '茄子', totalExportVolume: 1050 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '茄果类监测点', varietyname: '西红柿', totalExportVolume: 1900 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '瓜类监测点', varietyname: '黄瓜', totalExportVolume: 2100 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '瓜类监测点', varietyname: '南瓜', totalExportVolume: 700 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '仁果类监测点', varietyname: '香蕉', totalExportVolume: 2300 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '仁果类监测点', varietyname: '葡萄', totalExportVolume: 1450 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '粮油类战略储备', varietyname: '花生', totalExportVolume: 1200 },
-      { oneLevel: `${queryData.province}农产数据中心`, twoLevel: '粮油类战略储备', varietyname: '芝麻', totalExportVolume: 650 },
-    ]
+  const mockData = [
+    { oneLevel: `${queryData.province}中心`, twoLevel: '根茎类', varietyname: '土豆', totalExportVolume: 2200 },
+    { oneLevel: `${queryData.province}中心`, twoLevel: '根茎类', varietyname: '胡萝卜', totalExportVolume: 1300 },
+    { oneLevel: `${queryData.province}中心`, twoLevel: '柑橘类', varietyname: '橘子', totalExportVolume: 1700 },
+    { oneLevel: `${queryData.province}中心`, twoLevel: '豆类', varietyname: '绿豆', totalExportVolume: 900 },
+    { oneLevel: `${queryData.province}中心`, twoLevel: '叶菜类', varietyname: '菠菜', totalExportVolume: 950 },
   ]
 
   let finalData = null
-  let dataSource = ''
-
   try {
-    console.log('2. 开始请求API...')
     const resp = await calendar(queryData, '/user/calendar')
-    console.log('3. API返回：', resp)
+    if (resp && resp.length > 0) finalData = resp
+  } catch (e) {}
 
-    if (resp && resp.length > 0) {
-      finalData = resp
-      dataSource = '真实数据'
-      console.log('4. 成功获取真实数据：', finalData.length, '条')
-    } else {
-      console.log('4. API返回空数据，将使用随机mock数据')
-    }
-  } catch (apiError) {
-    console.log('4. API请求失败，将使用随机mock数据，错误：', apiError.message)
-  }
+  if (!finalData) finalData = mockData
 
-  if (!finalData) {
-    finalData = mockDataGroups[Math.floor(Math.random() * mockDataGroups.length)]
-    dataSource = `mock数据组${mockDataGroups.indexOf(finalData) + 1}`
-    console.log('5. 使用随机mock数据：', dataSource)
-  }
+  const { nodes, links } = transformToSankeyData(finalData)
+  option.series[0].data = nodes
+  option.series[0].links = links
 
-  const sankeyData = transformToSankeyData(finalData)
-  console.log('6. 数据转换完成：', {
-    节点数: sankeyData.nodes.length,
-    连接线数: sankeyData.links.length,
-    数据源: dataSource,
-  })
-
-  option.series[0].data = sankeyData.nodes
-  option.series[0].links = sankeyData.links
-
-  if (!myChart) {
-    console.log('7. 图表实例不存在，重新初始化')
-    initChart()
-  }
-
-  if (myChart) {
-    console.log('8. 设置图表数据...')
-    myChart.setOption(option, true)
-    console.log('✅ 9. 桑吉图显示成功！')
-  } else {
-    console.error('❌ 9. 图表实例创建失败！')
-  }
+  if (!myChart) initChart()
+  else myChart.setOption(option, true)
 }
 
 const initChart = () => {
-  if (!sankeyChart.value) {
-    console.error('桑吉图容器未找到')
-    return
-  }
-
-  // 销毁旧实例（如果存在）
-  if (myChart) {
-    myChart.dispose()
-  }
-
-  // 确保容器有明确的高度
-  sankeyChart.value.style.height = '100%'
-  sankeyChart.value.style.width = '100%'
-
-  // 创建新实例，使用 dark 主题（如果 echarts 引入了 dark 主题包）
-  // 这里直接在 option 里配置了背景色，所以不用特定主题
+  if (!sankeyChart.value) return
   myChart = echarts.init(sankeyChart.value)
-  console.log('桑吉图实例已创建')
-
-  // 设置初始配置
   myChart.setOption(option)
-
-  // 添加点击事件
   myChart.on('click', (params) => {
     if (params.dataType === 'node') {
-      // 为了检查是否是蔬菜，这里需要一个简化的查找方式。
-      // 在真实应用中，你可能需要更严谨的判断逻辑。
-      const isVegetable = option.series[0].data.some(node => 
-          node.name === params.name && 
-          // 这里只是一个简单的假设，基于你之前的 transform 逻辑
-          // 实际需要根据业务逻辑判断点击的是否是最后一级的品种名
-          !option.series[0].links.some(link => link.source === params.name)
-      );
-
-      if (isVegetable) {
-        console.log('点击了品种节点:', params.name);
+      const isLeaf = !option.series[0].links.some(l => l.source === params.name)
+      if (isLeaf) {
         mapProductStore.setCurrentProduct(params.name)
-        ElMessage.success(`已选择品种: ${params.name}`)
+        ElMessage.success(`定位品种: ${params.name}`)
       }
     }
   })
-
-  window.addEventListener('resize', handleResize)
+  window.addEventListener('resize', () => myChart && myChart.resize())
 }
 
-const handleResize = () => {
-  if (myChart) {
-    myChart.resize()
-  }
-}
-
-watch(
-  () => mapLocationStore.currentProvince,
-  () => {
-    initData()
-  },
-)
-
-onMounted(() => {
-  nextTick(async () => {
-    initChart()
-    // 确保图表实例创建后再加载数据
-    await initData()
-  })
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-  if (myChart) {
-    myChart.dispose()
-    myChart = null
-  }
-})
+watch(() => mapLocationStore.currentProvince, () => { initData() })
+onMounted(() => { nextTick(() => initData()) })
+onUnmounted(() => { if (myChart) myChart.dispose() })
 </script>
 
 <style scoped>
 .sankey-container {
   width: 100%;
   height: 100%;
-  position: relative;
-  min-height: 300px;
-  /* 添加一个微妙的科技感网格背景 */
-  background-image: 
-    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-color: #050d19; /* 确保在图表加载前也有背景 */
+  min-height: 400px;
+  background: #020617; /* 更深邃的底色 */
+  overflow: hidden;
 }
 
-/* 可选：添加一个四周的暗角效果 */
-.sankey-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
-  pointer-events: none; /* 确保不影响鼠标交互 */
+/* 装饰背景：微弱的网格感 */
+.tech-bg {
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
 .sankey-chart {
   width: 100%;
   height: 100%;
-  min-height: 300px;
-}
-
-@media (max-width: 768px) {
-  .sankey-container,
-  .sankey-chart {
-    min-height: 400px;
-  }
 }
 </style>

@@ -285,8 +285,8 @@ const setOptions = (mapName) => {
     
     // 图例配置保持不变
     visualMap: {
-      show: true,
-      seriesIndex: -1, // 保持这个！防止 visualMap 覆盖你的渐变色
+      show: false,
+      seriesIndex: -1,
       orient: 'horizontal', 
       min: 0,
       max: 1000,
