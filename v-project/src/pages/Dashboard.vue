@@ -60,9 +60,14 @@
         </div>
 
         <div class="center-bottom">
-          <div class="card box-analysis">
+          <div class="card box-analysis-left">
             <div class="card-body">
               <ProductAnalysisGreen />
+            </div>
+          </div>
+          <div class="card box-analysis-right">
+            <div class="card-body">
+              <PriceTrendChart />
             </div>
           </div>
         </div>
@@ -102,6 +107,7 @@ import { useRouter } from 'vue-router'
 import ChinaMapWrapper from '../components/tvecharts/ChinaMapWrapper.vue'
 import TrendChart from '../components/tvecharts/TrendChart.vue'
 import ProductAnalysisGreen from '../components/tvecharts/ProductAnalysisGreen.vue'
+import PriceTrendChart from '../components/tvecharts/PriceTrendChart.vue'
 import Sankey from '../components/tvecharts/Sankey.vue'
 import Warning from '../components/tvecharts/warning.vue'
 import AiPrediction from '../components/aiprediction/AiPrediction.vue'
@@ -501,15 +507,16 @@ body {
 
 /* === 中间栏布局 === */
 .map-container {
-  flex: 2;
+  flex: 3;
   position: relative;
   border: 1px solid rgba(66, 227, 164, 0.3);
   background: radial-gradient(circle, rgba(0, 30, 60, 0.8), rgba(0, 0, 0, 0));
 }
 .mock-map { width: 100%; height: 100%; }
 
-.center-bottom { flex: 1; display: flex; flex-direction: column; }
-.box-analysis { flex: 1; height: 100%; }
+.center-bottom { flex: 1; display: flex; gap: 15px; }
+.box-analysis-left { flex: 2; height: 100%; }
+.box-analysis-right { flex: 3; height: 100%; }
 
 /* === 右侧栏布局 (优化后) === */
 .box-radar { flex: 6; min-height: 0; }
